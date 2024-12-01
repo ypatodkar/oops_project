@@ -1,0 +1,20 @@
+[2024-11-30 15:30:29] [ERROR] Error initializing garden from file: config.txt (No such file or directory)
+[2024-11-30 15:30:29] [INFO] Rainfall of 11 units applied.
+[2024-11-30 15:30:29] [INFO] Simulated rainfall of 11 units.
+[2024-11-30 15:30:29] [INFO] Temperature set to 40 degrees.
+[2024-11-30 15:30:29] [INFO] Temperature set to 40 degrees.
+[2024-11-30 15:32:04] [ERROR] Error initializing garden from file: config.txt (No such file or directory)
+[2024-11-30 15:32:04] [INFO] Rainfall of 6 units applied.
+[2024-11-30 15:32:04] [INFO] Simulated rainfall of 6 units.
+[2024-11-30 15:32:04] [INFO] Temperature set to 37 degrees.
+[2024-11-30 15:32:04] [INFO] Temperature set to 37 degrees.
+[2024-11-30 15:32:27] [ERROR] Error initializing garden from file: ./config.txt (No such file or directory)
+[2024-11-30 15:32:27] [INFO] Rainfall of 13 units applied.
+[2024-11-30 15:32:27] [INFO] Simulated rainfall of 13 units.
+[2024-11-30 15:32:27] [INFO] Temperature set to 26 degrees.
+[2024-11-30 15:32:27] [INFO] Temperature set to 26 degrees.
+[2024-11-30 15:33:03] [ERROR] Error initializing garden from file: ./config.txt (No such file or directory)
+[2024-11-30 15:33:03] [INFO] Rainfall of 10 units applied.
+[2024-11-30 15:33:03] [INFO] Simulated rainfall of 10 units.
+[2024-11-30 15:33:03] [INFO] Temperature set to 37 degrees.
+[2024-11-30 15:33:03] [INFO] Temperature set to 37 degrees.

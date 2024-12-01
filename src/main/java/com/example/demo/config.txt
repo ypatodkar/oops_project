@@ -1,0 +1,4 @@
+Rose,5,aphids;whiteflies,10,35
+Sunflower,10,caterpillars,15,40,100
+Lily,4,thrips,12,30
+GenericPlant,6,mites,15,35
