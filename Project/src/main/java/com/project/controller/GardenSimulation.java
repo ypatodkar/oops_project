@@ -729,7 +729,7 @@ public class GardenSimulation extends Application {
 
             gridButton.setText(buttonText.toString());
 
-            gridButton.setStyle(" -fx-text-alignment: center; -fx-background-color: green; -fx-border-color: black; -fx-pref-width: 120px;-fx-pref-height: 90px;");
+            gridButton.setStyle(" -fx-text-alignment: center; -fx-background-color: green; -fx-border-color: black; -fx-pref-width: 120px;-fx-pref-height: 70px;");
         }
     }
 
@@ -974,9 +974,9 @@ public class GardenSimulation extends Application {
 
         if (gameHour >= 6 && gameHour < 12) {
             greeting = "☀️ Good Morning!";
-        } else if (gameHour >= 12 && gameHour < 18) {
+        } else if (gameHour >= 12 && gameHour < 17) {
             greeting = "🌤️ Good Afternoon!";
-        } else if (gameHour >= 18 && gameHour < 21) {
+        } else if (gameHour >= 17 && gameHour < 23) {
             greeting = "🌅 Good Evening!";
         } else {
             greeting = "🌙 Good Night!";

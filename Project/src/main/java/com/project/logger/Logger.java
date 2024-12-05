@@ -17,6 +17,17 @@ public class Logger {
 
     private static boolean enableConsoleLogging = true; // Toggle console logging
 
+    // Static initializer to clear the log file upon class loading
+    static {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, false))) { // 'false' to overwrite
+            // Optionally, write a header
+            writer.write("Garden Simulation Log\n");
+            writer.write("=====================\n\n");
+        } catch (IOException e) {
+            System.err.println("Error initializing log file: " + e.getMessage());
+        }
+    }
+
     /**
      * Log a message to the log file and optionally to the console.
      *
@@ -28,7 +39,7 @@ public class Logger {
         String logEntry = String.format("[%s] [%s] %s", timestamp, level, message);
 
         // Write to log file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, true))) { // 'true' to append
             writer.write(logEntry);
             writer.newLine();
         } catch (IOException e) {
