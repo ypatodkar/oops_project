@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -31,6 +32,25 @@ public class GardenSimulation extends Application {
     private Label currentTimeLabel;
     private Label currentTempLabel;
     private int currentTemperature = 25; // Default temperature
+    private static final int REAL_TO_GAME_TIME_MULTIPLIER = 24; // 1 real second = 24 game seconds
+
+    private int gameHour = 0;     // Current hour in the game (0-23)
+    private int gameMinute = 0;   // Current minute in the game (0-59)
+    private int gameSecond = 0;   // Current second in the game (0-59)
+    private int gameDay = 1;      // Current day in the game
+
+    private boolean isIrrigationOn = false; // Tracks irrigation status
+    private final int IRRIGATION_AMOUNT = 20; // Water level increase per irrigation
+    private final int IRRIGATION_DURATION_MINUTES = 10; // Duration of irrigation in game minutes
+
+    private final int RAINFALL_AMOUNT = 30; // Amount of water added during rainfall
+    private final int RAINFALL_DURATION_MINUTES = 15; // Duration of rainfall in game minutes
+
+
+
+
+    private Background gameBackground; // Background for the main layout
+
 
     public static void main(String[] args) {
         launch(args);
@@ -38,11 +58,12 @@ public class GardenSimulation extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        BorderPane mainLayout = new BorderPane();
         initializePestVulnerabilities();
         initializeInsectData();
 
+        startGameTimeTimer();
 
-        BorderPane mainLayout = new BorderPane();
 
         HBox topSection = initializeTopSection();
         VBox leftSidebar = initializeLeftSidebar();
@@ -79,6 +100,10 @@ public class GardenSimulation extends Application {
 
         startWaterReductionTimer();
         startDayIncrementTimer();
+        startGameClock(mainLayout); // Start the game clock
+        startIrrigationTimer(); // Start the irrigation system
+        startRainfallTimer(); //Start Rainfall Timer
+
     }
 
     private void initializePestVulnerabilities() {
@@ -96,32 +121,183 @@ public class GardenSimulation extends Application {
         insectDamageMap.put("Insect D", Map.of(PlantType.ASHOKA.name(), 20));
     }
 
+    private void startRainfall() {
+        logArea.appendText("[" + getGameTimeString() + "] Rainfall started.\n");
+
+        // Increase water level for all plants
+        for (Button gridButton : plantMap.keySet()) {
+            Plant plant = plantMap.get(gridButton);
+            if (plant != null) {
+                plant.water(RAINFALL_AMOUNT);
+                updateGridButtonText(gridButton, plant); // Update the UI
+            }
+        }
+
+        // Stop rainfall after the duration
+        Thread stopRainfallThread = new Thread(() -> {
+            try {
+                Thread.sleep(RAINFALL_DURATION_MINUTES * 1000L / REAL_TO_GAME_TIME_MULTIPLIER);
+                Platform.runLater(() -> logArea.appendText("[" + getGameTimeString() + "] Rainfall stopped.\n"));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        stopRainfallThread.setDaemon(true);
+        stopRainfallThread.start();
+    }
+
+    private void startRainfallTimer() {
+        Thread rainfallThread = new Thread(() -> {
+            Random random = new Random();
+
+            while (true) {
+                try {
+                    // Wait for a random period between 1 to 3 real hours (equivalent to in-game hours)
+                    int randomWaitTime = (1 + random.nextInt(3)) * 60 * 60 * 1000 / REAL_TO_GAME_TIME_MULTIPLIER;
+                    Thread.sleep(randomWaitTime);
+
+                    Platform.runLater(() -> {
+                        // Trigger rainfall at the current game time
+                        startRainfall();
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        rainfallThread.setDaemon(true);
+        rainfallThread.start();
+    }
+
+
+
+    private void startIrrigationTimer() {
+        Thread irrigationThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000 / REAL_TO_GAME_TIME_MULTIPLIER); // Sync with game time updates
+                    Platform.runLater(() -> {
+                        if ((gameHour == 6 || gameHour == 18) && gameMinute == 0 && !isIrrigationOn) {
+                            startIrrigation();
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        irrigationThread.setDaemon(true);
+        irrigationThread.start();
+    }
+
+
+    private void startIrrigation() {
+        isIrrigationOn = true;
+        logArea.appendText("[" + getGameTimeString() + "] Automatic irrigation started.\n");
+
+        // Increase water level for all plants
+        for (Button gridButton : plantMap.keySet()) {
+            Plant plant = plantMap.get(gridButton);
+            if (plant != null) {
+                plant.water(IRRIGATION_AMOUNT);
+                updateGridButtonText(gridButton, plant); // Update UI
+            }
+        }
+
+        // Schedule irrigation to stop after the duration
+        Thread stopIrrigationThread = new Thread(() -> {
+            try {
+                Thread.sleep(IRRIGATION_DURATION_MINUTES * 1000L / REAL_TO_GAME_TIME_MULTIPLIER);
+                Platform.runLater(this::stopIrrigation);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        stopIrrigationThread.setDaemon(true);
+        stopIrrigationThread.start();
+    }
+
+    private void stopIrrigation() {
+        isIrrigationOn = false;
+        irrigationStatusLabel.setText("Irrigation: OFF"); // Update UI status
+        logArea.appendText("[" + getGameTimeString() + "] Automatic irrigation stopped.\n");
+    }
+
+
+    private String getGameTimeString() {
+        String period = (gameHour < 12) ? "AM" : "PM";
+        int displayHour = (gameHour % 12 == 0) ? 12 : gameHour % 12;
+
+        return String.format("%02d:%02d:%02d %s", displayHour, gameMinute, gameSecond, period);
+    }
+
+
+
+
+    private void startGameClock(BorderPane mainLayout) {
+        Thread gameClockThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000); // 1 real second
+                    Platform.runLater(() -> {
+                        // Increment game time
+                        gameSecond += REAL_TO_GAME_TIME_MULTIPLIER;
+
+                        if (gameSecond >= 60) {
+                            gameSecond -= 60;
+                            gameMinute++;
+                        }
+
+                        if (gameMinute >= 60) {
+                            gameMinute -= 60;
+                            gameHour++;
+                        }
+
+                        if (gameHour >= 24) {
+                            gameHour -= 24;
+                            gameDay++;
+                            currentDayLabel.setText("Day: " + gameDay);
+                        }
+
+                        // Update time label
+                        updateGameTimeLabel();
+
+                        // Update greeting based on time
+                        updateBackground(mainLayout);
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        gameClockThread.setDaemon(true);
+        gameClockThread.start();
+    }
+
+
+    private Label irrigationStatusLabel;
+
+    private Label greetingLabel; // Declare at class level
+
     private HBox initializeTopSection() {
         HBox topSection = new HBox();
         topSection.setSpacing(20);
         topSection.setPadding(new Insets(10));
         topSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
 
-        currentDayLabel = new Label("Day: 1");
-        currentDateLabel = new Label("Date: " + getCurrentDate());
-        currentTimeLabel = new Label("Time: " + getCurrentTime());
+        currentDayLabel = new Label("Day: " + gameDay);
+        currentTimeLabel = new Label("Game Time: 12:00 AM");
         currentTempLabel = new Label("Current Temp: " + currentTemperature + "°C");
+        irrigationStatusLabel = new Label("Irrigation: OFF");
 
-        topSection.getChildren().addAll(currentDayLabel, currentDateLabel, currentTimeLabel, currentTempLabel);
+        greetingLabel = new Label(); // Initialize the greeting label
+        greetingLabel.setFont(new Font("Arial", 16)); // Style the greeting
 
-        Thread timeUpdater = new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(1000);
-                    Platform.runLater(() -> currentTimeLabel.setText("Time: " + getCurrentTime()));
-                } catch (InterruptedException ignored) {}
-            }
-        });
-        timeUpdater.setDaemon(true);
-        timeUpdater.start();
-
+        topSection.getChildren().addAll(currentDayLabel, currentTimeLabel, currentTempLabel, irrigationStatusLabel, greetingLabel);
         return topSection;
     }
+
+
 
     private VBox initializeLeftSidebar() {
         VBox leftSidebar = new VBox();
@@ -206,7 +382,7 @@ public class GardenSimulation extends Application {
 
         Button addWaterButton = new Button("💧 Add Water");
         String existingStyle = addWaterButton.getStyle();
-        addWaterButton.setStyle(existingStyle + " -fx-pref-width: 120px; -fx-pref-height: 70px;");
+        addWaterButton.setStyle(existingStyle + " -fx-pref-width: 120px; -fx-pref-height: 50px;");
 
 
         addWaterButton.setOnAction(e -> showAddWaterPopup());
@@ -303,10 +479,12 @@ public class GardenSimulation extends Application {
                             }
                         }
                         activeInsects.removeAll(removedInsects);
-
                         if (removedInsects.size() > 0) {
-                            updateGridButtonText(gridButton, plantMap.get(gridButton));
-                            logArea.appendText(getCurrentTime() + ": Pest control applied at grid (" +
+                            // Get the plant name
+                            String plantName = plantMap.get(gridButton).getName();
+
+                            // Log the pest control application
+                            logArea.appendText(getCurrentTime() + ": Pest control applied for " + plantName + " at grid (" +
                                     ((int[]) gridButton.getUserData())[0] + ", " +
                                     ((int[]) gridButton.getUserData())[1] + "). Removed insects: " +
                                     String.join(", ", removedInsects) + "\n");
@@ -409,7 +587,7 @@ public class GardenSimulation extends Application {
 
     private GridPane initializeGardenGrid() {
         GridPane gardenGrid = new GridPane();
-        gardenGrid.setPadding(new Insets(10));
+        gardenGrid.setPadding(new Insets(70, 10, 10, 10)); // Top padding of 30px, right 10px, bottom 10px, left 10px
         gardenGrid.setHgap(5); // Spacing between columns
         gardenGrid.setVgap(5); // Spacing between rows
 
@@ -534,7 +712,7 @@ public class GardenSimulation extends Application {
             }
 
             gridButton.setText(buttonText.toString());
-            gridButton.setStyle(" -fx-text-alignment: center; -fx-background-color: green; -fx-border-color: black; -fx-pref-width: 120px;-fx-pref-height: 70px;");
+            gridButton.setStyle(" -fx-text-alignment: center; -fx-background-color: green; -fx-border-color: black; -fx-pref-width: 120px;-fx-pref-height: 90px;");
         }
     }
 
@@ -575,11 +753,11 @@ public class GardenSimulation extends Application {
         layout.setSpacing(10);
         layout.setPadding(new Insets(10));
 
-        Spinner<Integer> tempSpinner = new Spinner<>(-50, 50, currentTemperature);
+        Spinner<Integer> tempSpinner = new Spinner<>(-50, 50, currentTemperature); // Spinner for temperature
         Button setTempButton = new Button("Set Temperature");
         setTempButton.setOnAction(e -> {
-            currentTemperature = tempSpinner.getValue();
-            currentTempLabel.setText("Current Temp: " + currentTemperature + "°C");
+            currentTemperature = tempSpinner.getValue(); // Update temperature
+            currentTempLabel.setText("Current Temp: " + currentTemperature + "°C"); // Update label
             logArea.appendText(getCurrentTime() + ": Temperature set to " + currentTemperature + "°C.\n");
             popup.close();
         });
@@ -590,6 +768,7 @@ public class GardenSimulation extends Application {
         popup.setScene(popupScene);
         popup.show();
     }
+
 
     private String getCurrentDate() {
         return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -603,19 +782,42 @@ public class GardenSimulation extends Application {
         List<String> vulnerabilities = pestVulnerabilities.getOrDefault(type.name(), new ArrayList<>());
         Object additionalParam = getAdditionalParamForPlantType(type);
 
-        // Create the plant with the necessary parameters
-        Plant plant = PlantFactory.createPlant(
+        // Assign unique water requirements based on plant type
+        int waterRequirement;
+        switch (type) {
+            case ROSE:
+                waterRequirement = 3; // Example values
+                break;
+            case MANGO:
+                waterRequirement = 7;
+                break;
+            case SUNFLOWER:
+                waterRequirement = 5;
+                break;
+            case TULSI:
+                waterRequirement = 4;
+                break;
+            case ASHOKA:
+                waterRequirement = 6;
+                break;
+            default:
+                waterRequirement = 5; // Default water requirement
+        }
+
+        // Create the plant
+        // Create the plant with a meaningful name
+        return PlantFactory.createPlant(
                 type,
-                name,
-                5, // waterRequirement
+                type.name(), // Use the plant type's name as the plant's name, e.g., "Rose", "Mango"
+                waterRequirement,
                 vulnerabilities,
                 15, // temperatureToleranceLow
                 35, // temperatureToleranceHigh
-                additionalParam // Additional parameter based on PlantType
+                additionalParam
         );
 
-        return plant;
     }
+
 
     private Object getAdditionalParamForPlantType(PlantType type) {
         switch (type) {
@@ -671,30 +873,17 @@ public class GardenSimulation extends Application {
                             Plant plant = entry.getValue();
 
                             if (plant != null) {
+                                // Calculate reduction based on plant's water requirement and temperature
                                 int baseRate = plant.getWaterRequirement();
                                 double temperatureMultiplier = 1 + (Math.abs(currentTemperature - 25) * 0.05); // Adjust rate based on temperature
-                                int reduction = (int) (baseRate * temperatureMultiplier);
+                                int reduction = (int) Math.ceil(baseRate * temperatureMultiplier);
+
                                 plant.decreaseWaterLevel(reduction);
 
                                 // Retrieve row and column from UserData
                                 int[] coordinates = (int[]) gridButton.getUserData();
                                 int row = coordinates[0];
                                 int col = coordinates[1];
-
-                                // Check for active insects on the plant
-                                List<String> activeInsects = activeInsectsMap.get(gridButton);
-                                if (activeInsects != null && !activeInsects.isEmpty()) {
-                                    int insectDamage = 0;
-                                    for (String insect : activeInsects) {
-                                        insectDamage += insectDamageMap.getOrDefault(insect, new HashMap<>())
-                                                .getOrDefault(plant.getPlantType().name(), 0);
-                                    }
-                                    plant.decreaseHealth(insectDamage);
-
-                                    logArea.appendText(getCurrentTime() + ": Insects at grid (" + row + ", " + col +
-                                            ") reduced health of " + plant.getName() + " by " + insectDamage +
-                                            " units. Current health: " + plant.getHealth() + "%\n");
-                                }
 
                                 if (plant.getCurrentWaterLevel() == 0) {
                                     plant.setHealth(0); // Set health to zero if water level is zero
@@ -703,13 +892,14 @@ public class GardenSimulation extends Application {
                                 if (plant.getHealth() == 0) {
                                     // Remove plant from the grid and backend
                                     gridButton.setText("");
-                                    gridButton.setStyle("-fx-background-color: #8B4513; -fx-border-color: black;-fx-pref-width: 120px;-fx-pref-height: 70px;"); // Reset grid button style
+                                    gridButton.setStyle("-fx-background-color: #8B4513; -fx-border-color: black;");
                                     iterator.remove(); // Remove the plant from the backend storage
-                                    logArea.appendText(getCurrentTime() + ": " + plant.getName() + " at grid (" + row + ", " + col + ") has died and been removed.\n");
+                                    logArea.appendText(String.format("[%s] %s at grid (%d, %d) has died and been removed.\n",
+                                            getCurrentTime(), plant.getName(), row, col));
                                 } else {
                                     updateGridButtonText(gridButton, plant);
-                                    logArea.appendText(getCurrentTime() + ": Water level of " + plant.getName() +
-                                            " at grid (" + row + ", " + col + ") reduced by " + reduction + " units. Current water level: " + plant.getCurrentWaterLevel() + "%\n");
+                                    logArea.appendText(String.format("[%s] Water level of %s at grid (%d, %d) reduced by %d units. Current water level: %d%%\n",
+                                            getCurrentTime(), plant.getName(), row, col, reduction, plant.getCurrentWaterLevel()));
                                 }
                             }
                         }
@@ -722,4 +912,64 @@ public class GardenSimulation extends Application {
         waterReductionThread.setDaemon(true);
         waterReductionThread.start();
     }
+
+
+
+    private void startGameTimeTimer() {
+        Thread gameTimeThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(150000); // 2.5 minutes = 1 game hour
+                    Platform.runLater(() -> {
+                        // Increment game time
+                        gameHour = (gameHour + 1) % 24;
+                        if (gameHour == 0) {
+                            gameDay++; // Increment day when hour resets
+                            currentDayLabel.setText("Day: " + gameDay);
+                        }
+
+                        // Update time display
+                        updateGameTimeLabel();
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        gameTimeThread.setDaemon(true);
+        gameTimeThread.start();
+    }
+
+    private void updateGameTimeLabel() {
+        String period = (gameHour < 12) ? "AM" : "PM";
+        int displayHour = (gameHour % 12 == 0) ? 12 : gameHour % 12;
+
+        currentTimeLabel.setText(String.format(
+                "Game Time: %02d:%02d:%02d %s", displayHour, gameMinute, gameSecond, period
+        ));
+    }
+
+
+
+
+    private void updateBackground(BorderPane mainLayout) {
+        String greeting;
+
+        if (gameHour >= 6 && gameHour < 12) {
+            greeting = "☀️ Good Morning!";
+        } else if (gameHour >= 12 && gameHour < 18) {
+            greeting = "🌤️ Good Afternoon!";
+        } else if (gameHour >= 18 && gameHour < 21) {
+            greeting = "🌅 Good Evening!";
+        } else {
+            greeting = "🌙 Good Night!";
+        }
+
+        // Set a static background color
+        mainLayout.setStyle("-fx-background-color: #45f5ee21;");
+
+        // Update greeting
+        greetingLabel.setText(greeting);
+    }
+
 }

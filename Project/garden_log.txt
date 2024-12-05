@@ -264,3 +264,199 @@
 [2024-12-04 17:22:19] [INFO] Plant 0's health increased by 5. Current health: 61%
 [2024-12-04 17:22:19] [INFO] Plant 3's health increased by 5. Current health: 61%
 [2024-12-04 17:22:19] [INFO] Plant 2's health increased by 5. Current health: 61%
+[2024-12-04 19:43:11] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 19:43:14] [INFO] Plant 0's health decreased by 10. Current health: 80%
+[2024-12-04 19:59:01] [INFO] Plant 2 watered with 10 units.
+[2024-12-04 19:59:01] [INFO] Plant 2's health decreased by 10. Current health: 90%
+[2024-12-04 19:59:01] [WARNING] Plant 2 has been overwatered and its health decreased.
+[2024-12-04 19:59:01] [INFO] Plant 0 watered with 10 units.
+[2024-12-04 19:59:01] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 19:59:01] [WARNING] Plant 0 has been overwatered and its health decreased.
+[2024-12-04 19:59:01] [INFO] Plant 1 watered with 10 units.
+[2024-12-04 19:59:01] [INFO] Plant 1's health decreased by 10. Current health: 90%
+[2024-12-04 19:59:01] [WARNING] Plant 1 has been overwatered and its health decreased.
+[2024-12-04 21:53:38] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 21:53:38] [INFO] Plant 0's health decreased by 8. Current health: 82%
+[2024-12-04 21:53:38] [INFO] Plant 1's health decreased by 20. Current health: 80%
+[2024-12-04 21:53:38] [INFO] Plant 2's health decreased by 15. Current health: 85%
+[2024-12-04 21:53:38] [INFO] Plant 2's health decreased by 10. Current health: 75%
+[2024-12-04 21:53:38] [INFO] Plant 3's health decreased by 5. Current health: 95%
+[2024-12-04 21:53:43] [INFO] Plant 0's health decreased by 18. Current health: 64%
+[2024-12-04 21:53:43] [INFO] Plant 1's health decreased by 20. Current health: 60%
+[2024-12-04 21:53:43] [INFO] Plant 2's health decreased by 25. Current health: 50%
+[2024-12-04 21:53:43] [INFO] Plant 3's health decreased by 5. Current health: 90%
+[2024-12-04 21:54:13] [INFO] Plant 0's health decreased by 18. Current health: 46%
+[2024-12-04 21:54:13] [INFO] Plant 1's health decreased by 20. Current health: 40%
+[2024-12-04 21:54:13] [INFO] Plant 2's health decreased by 25. Current health: 25%
+[2024-12-04 21:54:13] [INFO] Plant 3's health decreased by 5. Current health: 85%
+[2024-12-04 21:54:43] [INFO] Plant 0's health decreased by 18. Current health: 28%
+[2024-12-04 21:54:43] [INFO] Plant 1's health decreased by 20. Current health: 20%
+[2024-12-04 21:54:43] [INFO] Plant 2's health decreased by 25. Current health: 0%
+[2024-12-04 21:54:43] [WARNING] Plant 2 has died.
+[2024-12-04 21:54:43] [INFO] Plant 3's health decreased by 5. Current health: 80%
+[2024-12-04 21:55:13] [INFO] Plant 0's health decreased by 18. Current health: 10%
+[2024-12-04 21:55:13] [INFO] Plant 1's health decreased by 20. Current health: 0%
+[2024-12-04 21:55:13] [WARNING] Plant 1 has died.
+[2024-12-04 21:55:13] [INFO] Plant 3's health decreased by 5. Current health: 75%
+[2024-12-04 22:09:02] [INFO] Plant 17's health decreased by 5. Current health: 95%
+[2024-12-04 22:09:02] [INFO] Plant 9's health decreased by 0. Current health: 100%
+[2024-12-04 22:09:02] [INFO] Plant 9's health decreased by 7. Current health: 93%
+[2024-12-04 22:09:02] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 22:09:02] [INFO] Plant 0's health decreased by 8. Current health: 82%
+[2024-12-04 22:09:02] [INFO] Plant 18's health decreased by 0. Current health: 100%
+[2024-12-04 22:09:02] [INFO] Plant 18's health decreased by 7. Current health: 93%
+[2024-12-04 22:09:02] [INFO] Plant 26's health decreased by 15. Current health: 85%
+[2024-12-04 22:09:02] [INFO] Plant 26's health decreased by 10. Current health: 75%
+[2024-12-04 22:09:29] [INFO] Plant 17's health decreased by 5. Current health: 90%
+[2024-12-04 22:09:29] [INFO] Plant 9's health decreased by 7. Current health: 86%
+[2024-12-04 22:09:29] [INFO] Plant 0's health decreased by 18. Current health: 64%
+[2024-12-04 22:09:29] [INFO] Plant 18's health decreased by 7. Current health: 86%
+[2024-12-04 22:09:29] [INFO] Plant 26's health decreased by 25. Current health: 50%
+[2024-12-04 22:15:42] [INFO] Mango's health decreased by 0. Current health: 100%
+[2024-12-04 22:15:42] [INFO] Tulsi's health decreased by 5. Current health: 95%
+[2024-12-04 22:15:42] [INFO] Sunflower's health decreased by 15. Current health: 85%
+[2024-12-04 22:15:42] [INFO] Rose's health decreased by 10. Current health: 90%
+[2024-12-04 22:15:42] [INFO] Rose's health decreased by 8. Current health: 82%
+[2024-12-04 22:15:49] [INFO] Mango watered with 11 units.
+[2024-12-04 22:15:49] [INFO] Mango's health decreased by 10. Current health: 90%
+[2024-12-04 22:15:49] [WARNING] Mango has been overwatered and its health decreased.
+[2024-12-04 22:15:49] [INFO] Tulsi watered with 11 units.
+[2024-12-04 22:15:49] [INFO] Tulsi's health decreased by 10. Current health: 85%
+[2024-12-04 22:15:49] [WARNING] Tulsi has been overwatered and its health decreased.
+[2024-12-04 22:15:49] [INFO] Ashoka watered with 11 units.
+[2024-12-04 22:15:49] [INFO] Ashoka's health decreased by 10. Current health: 90%
+[2024-12-04 22:15:49] [WARNING] Ashoka has been overwatered and its health decreased.
+[2024-12-04 22:15:49] [INFO] Sunflower watered with 11 units.
+[2024-12-04 22:15:49] [INFO] Sunflower's health decreased by 10. Current health: 75%
+[2024-12-04 22:15:49] [WARNING] Sunflower has been overwatered and its health decreased.
+[2024-12-04 22:15:49] [INFO] Rose watered with 11 units.
+[2024-12-04 22:15:49] [INFO] Rose's health decreased by 10. Current health: 72%
+[2024-12-04 22:15:49] [WARNING] Rose has been overwatered and its health decreased.
+[2024-12-04 22:26:45] [INFO] Plant 1 watered with 10 units.
+[2024-12-04 22:26:45] [INFO] Plant 1's health decreased by 10. Current health: 90%
+[2024-12-04 22:26:45] [WARNING] Plant 1 has been overwatered and its health decreased.
+[2024-12-04 22:26:45] [INFO] Plant 2 watered with 10 units.
+[2024-12-04 22:26:45] [INFO] Plant 2's health decreased by 10. Current health: 90%
+[2024-12-04 22:26:45] [WARNING] Plant 2 has been overwatered and its health decreased.
+[2024-12-04 22:26:45] [INFO] Plant 8 watered with 10 units.
+[2024-12-04 22:26:45] [INFO] Plant 8's health decreased by 10. Current health: 90%
+[2024-12-04 22:26:45] [WARNING] Plant 8 has been overwatered and its health decreased.
+[2024-12-04 22:26:45] [INFO] Plant 9 watered with 10 units.
+[2024-12-04 22:26:45] [INFO] Plant 9's health decreased by 10. Current health: 90%
+[2024-12-04 22:26:45] [WARNING] Plant 9 has been overwatered and its health decreased.
+[2024-12-04 22:26:45] [INFO] Plant 0 watered with 10 units.
+[2024-12-04 22:26:45] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 22:26:45] [WARNING] Plant 0 has been overwatered and its health decreased.
+[2024-12-04 22:33:01] [INFO] ASHOKA watered with 10 units.
+[2024-12-04 22:33:01] [INFO] ASHOKA's health decreased by 10. Current health: 90%
+[2024-12-04 22:33:01] [WARNING] ASHOKA has been overwatered and its health decreased.
+[2024-12-04 22:33:01] [INFO] MANGO watered with 10 units.
+[2024-12-04 22:33:01] [INFO] MANGO's health decreased by 10. Current health: 90%
+[2024-12-04 22:33:01] [WARNING] MANGO has been overwatered and its health decreased.
+[2024-12-04 22:33:01] [INFO] SUNFLOWER watered with 10 units.
+[2024-12-04 22:33:01] [INFO] SUNFLOWER's health decreased by 10. Current health: 90%
+[2024-12-04 22:33:01] [WARNING] SUNFLOWER has been overwatered and its health decreased.
+[2024-12-04 22:33:01] [INFO] ROSE watered with 10 units.
+[2024-12-04 22:33:01] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-04 22:33:01] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-04 22:33:01] [INFO] TULSI watered with 10 units.
+[2024-12-04 22:33:01] [INFO] TULSI's health decreased by 10. Current health: 90%
+[2024-12-04 22:33:01] [WARNING] TULSI has been overwatered and its health decreased.
+[2024-12-04 22:33:09] [INFO] MANGO's health decreased by 7. Current health: 83%
+[2024-12-04 22:33:09] [INFO] SUNFLOWER's health decreased by 10. Current health: 80%
+[2024-12-04 22:34:08] [INFO] SUNFLOWER's health increased by 5. Current health: 85%
+[2024-12-04 22:34:08] [INFO] MANGO's health increased by 5. Current health: 88%
+[2024-12-04 22:36:04] [INFO] MANGO's health decreased by 0. Current health: 100%
+[2024-12-04 22:36:04] [INFO] MANGO's health decreased by 7. Current health: 93%
+[2024-12-04 22:36:04] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-04 22:36:04] [INFO] ROSE's health decreased by 8. Current health: 82%
+[2024-12-04 22:36:04] [INFO] ASHOKA's health decreased by 20. Current health: 80%
+[2024-12-04 22:36:25] [INFO] MANGO's health increased by 5. Current health: 98%
+[2024-12-04 22:36:25] [INFO] ROSE's health increased by 5. Current health: 87%
+[2024-12-04 22:36:25] [INFO] ASHOKA's health increased by 5. Current health: 85%
+[2024-12-04 22:36:32] [INFO] ROSE's health decreased by 10. Current health: 77%
+[2024-12-04 22:36:40] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 22:36:40] [INFO] ROSE's health increased by 5. Current health: 82%
+[2024-12-04 22:36:40] [INFO] ASHOKA's health increased by 5. Current health: 90%
+[2024-12-04 22:36:50] [INFO] ROSE's health increased by 5. Current health: 87%
+[2024-12-04 22:44:48] [INFO] TULSI's health decreased by 5. Current health: 95%
+[2024-12-04 22:44:48] [INFO] ASHOKA's health decreased by 20. Current health: 80%
+[2024-12-04 22:44:48] [INFO] MANGO's health decreased by 0. Current health: 100%
+[2024-12-04 22:44:48] [INFO] MANGO's health decreased by 7. Current health: 93%
+[2024-12-04 22:44:48] [INFO] SUNFLOWER's health decreased by 15. Current health: 85%
+[2024-12-04 22:44:48] [INFO] SUNFLOWER's health decreased by 10. Current health: 75%
+[2024-12-04 22:44:48] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-04 22:44:48] [INFO] ROSE's health decreased by 8. Current health: 82%
+[2024-12-04 23:07:14] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-04 23:07:14] [INFO] ROSE's health decreased by 8. Current health: 82%
+[2024-12-04 23:07:14] [INFO] SUNFLOWER's health decreased by 15. Current health: 85%
+[2024-12-04 23:07:14] [INFO] SUNFLOWER's health decreased by 10. Current health: 75%
+[2024-12-04 23:07:14] [INFO] TULSI's health decreased by 5. Current health: 95%
+[2024-12-04 23:07:14] [INFO] MANGO's health decreased by 0. Current health: 100%
+[2024-12-04 23:07:14] [INFO] MANGO's health decreased by 7. Current health: 93%
+[2024-12-04 23:07:55] [INFO] TULSI's health increased by 5. Current health: 100%
+[2024-12-04 23:07:55] [INFO] SUNFLOWER's health increased by 5. Current health: 80%
+[2024-12-04 23:07:55] [INFO] ROSE's health increased by 5. Current health: 87%
+[2024-12-04 23:07:55] [INFO] MANGO's health increased by 5. Current health: 98%
+[2024-12-04 23:08:10] [INFO] TULSI's health increased by 5. Current health: 100%
+[2024-12-04 23:08:10] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 23:08:10] [INFO] SUNFLOWER's health increased by 5. Current health: 85%
+[2024-12-04 23:08:10] [INFO] ROSE's health increased by 5. Current health: 92%
+[2024-12-04 23:08:25] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 23:08:25] [INFO] SUNFLOWER's health increased by 5. Current health: 90%
+[2024-12-04 23:08:25] [INFO] ROSE's health increased by 5. Current health: 97%
+[2024-12-04 23:08:40] [INFO] ROSE's health increased by 5. Current health: 100%
+[2024-12-04 23:08:40] [INFO] SUNFLOWER's health increased by 5. Current health: 95%
+[2024-12-04 23:18:18] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-04 23:18:18] [INFO] ROSE's health decreased by 8. Current health: 82%
+[2024-12-04 23:18:18] [INFO] MANGO's health decreased by 0. Current health: 100%
+[2024-12-04 23:18:18] [INFO] MANGO's health decreased by 7. Current health: 93%
+[2024-12-04 23:18:18] [INFO] MANGO's health decreased by 0. Current health: 100%
+[2024-12-04 23:18:18] [INFO] MANGO's health decreased by 7. Current health: 93%
+[2024-12-04 23:18:18] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-04 23:18:18] [INFO] ROSE's health decreased by 8. Current health: 82%
+[2024-12-04 23:18:18] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-04 23:18:18] [INFO] ROSE's health decreased by 8. Current health: 82%
+[2024-12-04 23:18:18] [INFO] MANGO's health decreased by 0. Current health: 100%
+[2024-12-04 23:18:18] [INFO] MANGO's health decreased by 7. Current health: 93%
+[2024-12-04 23:18:40] [INFO] MANGO's health increased by 5. Current health: 98%
+[2024-12-04 23:18:40] [INFO] ROSE's health increased by 5. Current health: 87%
+[2024-12-04 23:18:40] [INFO] MANGO's health increased by 5. Current health: 98%
+[2024-12-04 23:18:40] [INFO] ROSE's health increased by 5. Current health: 87%
+[2024-12-04 23:18:40] [INFO] MANGO's health increased by 5. Current health: 98%
+[2024-12-04 23:18:40] [INFO] ROSE's health increased by 5. Current health: 87%
+[2024-12-04 23:18:55] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 23:18:55] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 23:18:55] [INFO] ROSE's health increased by 5. Current health: 92%
+[2024-12-04 23:18:55] [INFO] ROSE's health increased by 5. Current health: 92%
+[2024-12-04 23:18:55] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 23:18:55] [INFO] ROSE's health increased by 5. Current health: 92%
+[2024-12-04 23:19:10] [INFO] ROSE's health increased by 5. Current health: 97%
+[2024-12-04 23:19:10] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 23:19:10] [INFO] ROSE's health increased by 5. Current health: 97%
+[2024-12-04 23:19:10] [INFO] MANGO's health increased by 5. Current health: 100%
+[2024-12-04 23:19:10] [INFO] ROSE's health increased by 5. Current health: 97%
+[2024-12-04 23:19:15] [INFO] ROSE watered with 30 units.
+[2024-12-04 23:19:15] [INFO] ROSE's health decreased by 10. Current health: 87%
+[2024-12-04 23:19:15] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-04 23:19:15] [INFO] MANGO watered with 30 units.
+[2024-12-04 23:19:15] [INFO] MANGO's health decreased by 10. Current health: 90%
+[2024-12-04 23:19:15] [WARNING] MANGO has been overwatered and its health decreased.
+[2024-12-04 23:19:15] [INFO] MANGO watered with 30 units.
+[2024-12-04 23:19:15] [INFO] MANGO's health decreased by 10. Current health: 90%
+[2024-12-04 23:19:15] [WARNING] MANGO has been overwatered and its health decreased.
+[2024-12-04 23:19:15] [INFO] ROSE watered with 30 units.
+[2024-12-04 23:19:15] [INFO] ROSE's health decreased by 10. Current health: 87%
+[2024-12-04 23:19:15] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-04 23:19:15] [INFO] ROSE watered with 30 units.
+[2024-12-04 23:19:15] [INFO] ROSE's health decreased by 10. Current health: 87%
+[2024-12-04 23:19:15] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-04 23:19:15] [INFO] MANGO watered with 30 units.
+[2024-12-04 23:19:15] [INFO] MANGO's health decreased by 10. Current health: 90%
+[2024-12-04 23:19:15] [WARNING] MANGO has been overwatered and its health decreased.
+[2024-12-04 23:19:25] [INFO] ROSE's health increased by 5. Current health: 92%
+[2024-12-04 23:19:25] [INFO] ROSE's health increased by 5. Current health: 92%
+[2024-12-04 23:19:25] [INFO] ROSE's health increased by 5. Current health: 92%
+[2024-12-04 23:19:40] [INFO] ROSE's health increased by 5. Current health: 97%
+[2024-12-04 23:19:40] [INFO] ROSE's health increased by 5. Current health: 97%
+[2024-12-04 23:19:40] [INFO] ROSE's health increased by 5. Current health: 97%
