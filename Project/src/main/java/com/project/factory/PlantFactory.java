@@ -75,7 +75,7 @@ public class PlantFactory {
                         fragrance
                 );
 
-            case TULSI:
+            case GANJA:
                 if (additionalParams.length < 1) {
                     throw new IllegalArgumentException("Tulsi requires medicinalProperties parameter.");
                 }

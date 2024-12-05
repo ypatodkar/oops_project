@@ -34,9 +34,11 @@ public class GardenSimulation extends Application {
     private int currentTemperature = 25; // Default temperature
     private static final int REAL_TO_GAME_TIME_MULTIPLIER = 24; // 1 real second = 24 game seconds
 
-    private int gameHour = 0;     // Current hour in the game (0-23)
-    private int gameMinute = 0;   // Current minute in the game (0-59)
-    private int gameSecond = 0;   // Current second in the game (0-59)
+
+    //Day , time
+    private int gameHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY); // Fetch system hour (0-23)
+    private int gameMinute = Calendar.getInstance().get(Calendar.MINUTE);    // Fetch system minute (0-59)
+    private int gameSecond = Calendar.getInstance().get(Calendar.SECOND);    // Fetch system second (0-59)
     private int gameDay = 1;      // Current day in the game
 
     private boolean isIrrigationOn = false; // Tracks irrigation status
@@ -59,6 +61,8 @@ public class GardenSimulation extends Application {
     @Override
     public void start(Stage primaryStage) {
         BorderPane mainLayout = new BorderPane();
+
+            //Initializing which plants are attacked/ affected by which insects
         initializePestVulnerabilities();
         initializeInsectData();
 
@@ -111,11 +115,11 @@ public class GardenSimulation extends Application {
         pestVulnerabilities.put(PlantType.SUNFLOWER.name(), Arrays.asList("Insect A", "Insect C"));
         pestVulnerabilities.put(PlantType.ASHOKA.name(), Collections.singletonList("Insect D"));
         pestVulnerabilities.put(PlantType.MANGO.name(), Arrays.asList("Insect B", "Insect C"));
-        pestVulnerabilities.put(PlantType.TULSI.name(), Collections.singletonList("Insect A"));
+        pestVulnerabilities.put(PlantType.GANJA.name(), Collections.singletonList("Insect A"));
     }
 
     private void initializeInsectData() {
-        insectDamageMap.put("Insect A", Map.of(PlantType.ROSE.name(), 10, PlantType.SUNFLOWER.name(), 15, PlantType.TULSI.name(), 5));
+        insectDamageMap.put("Insect A", Map.of(PlantType.ROSE.name(), 10, PlantType.SUNFLOWER.name(), 15, PlantType.GANJA.name(), 5));
         insectDamageMap.put("Insect B", Map.of(PlantType.ROSE.name(), 8, PlantType.ASHOKA.name(), 12));
         insectDamageMap.put("Insect C", Map.of(PlantType.SUNFLOWER.name(), 10, PlantType.MANGO.name(), 7));
         insectDamageMap.put("Insect D", Map.of(PlantType.ASHOKA.name(), 20));
@@ -286,7 +290,17 @@ public class GardenSimulation extends Application {
         topSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
 
         currentDayLabel = new Label("Day: " + gameDay);
-        currentTimeLabel = new Label("Game Time: 12:00 AM");
+
+        currentTimeLabel = new Label(String.format(
+                "Game Time: %02d:%02d:%02d %s",
+                (gameHour % 12 == 0 ? 12 : gameHour % 12),
+                gameMinute,
+                gameSecond,
+                gameHour < 12 ? "AM" : "PM"
+        ));
+
+
+
         currentTempLabel = new Label("Current Temp: " + currentTemperature + "°C");
         irrigationStatusLabel = new Label("Irrigation: OFF");
 
@@ -347,9 +361,9 @@ public class GardenSimulation extends Application {
         sunflowerButton.setUserData(PlantType.SUNFLOWER);
         sunflowerButton.getStyleClass().add("plant-toggle-button");
 
-        ToggleButton tulsiButton = new ToggleButton("🌿 Tulsi");
+        ToggleButton tulsiButton = new ToggleButton("🌿 Ganja");
         tulsiButton.setToggleGroup(plantToggleGroup);
-        tulsiButton.setUserData(PlantType.TULSI);
+        tulsiButton.setUserData(PlantType.GANJA);
         tulsiButton.getStyleClass().add("plant-toggle-button");
 
         // Listener to handle selection changes
@@ -711,7 +725,10 @@ public class GardenSimulation extends Application {
                 }
             }
 
+
+
             gridButton.setText(buttonText.toString());
+
             gridButton.setStyle(" -fx-text-alignment: center; -fx-background-color: green; -fx-border-color: black; -fx-pref-width: 120px;-fx-pref-height: 90px;");
         }
     }
@@ -794,7 +811,7 @@ public class GardenSimulation extends Application {
             case SUNFLOWER:
                 waterRequirement = 5;
                 break;
-            case TULSI:
+            case GANJA:
                 waterRequirement = 4;
                 break;
             case ASHOKA:
@@ -827,7 +844,7 @@ public class GardenSimulation extends Application {
                 return "Strong Scent"; // Fragrance for Jasmine
             case MANGO:
                 return 100; // fruitYield for Mango
-            case TULSI:
+            case GANJA:
                 return "Anti-inflammatory"; // medicinalProperties for Tulsi
             case SUNFLOWER:
                 return 50; // seedProduction for Sunflower

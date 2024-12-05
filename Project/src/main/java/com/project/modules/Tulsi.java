@@ -14,7 +14,7 @@ public class Tulsi extends Bush {
     }
 
     public Tulsi(String name, int waterRequirement, List<String> pestVulnerabilities, int tempLow, int tempHigh, int initialDensity, int trimmingFrequency, String medicinalProperties) {
-        super(PlantType.TULSI, name, waterRequirement, pestVulnerabilities, tempLow, tempHigh, initialDensity, trimmingFrequency);
+        super(PlantType.GANJA, name, waterRequirement, pestVulnerabilities, tempLow, tempHigh, initialDensity, trimmingFrequency);
         this.medicinalProperties = medicinalProperties;
     }
 

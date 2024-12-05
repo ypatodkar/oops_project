@@ -6,7 +6,7 @@ package com.project.factory;
 public enum PlantType {
     MANGO("🥭"),
     ROSE("🌹"),
-    TULSI("🍀"),
+    GANJA("🍀"),
     ASHOKA("🌲"),
     SUNFLOWER("🌻");
     // Add other plant types and their corresponding emojis as needed.

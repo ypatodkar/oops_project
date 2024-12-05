@@ -460,3 +460,47 @@
 [2024-12-04 23:19:40] [INFO] ROSE's health increased by 5. Current health: 97%
 [2024-12-04 23:19:40] [INFO] ROSE's health increased by 5. Current health: 97%
 [2024-12-04 23:19:40] [INFO] ROSE's health increased by 5. Current health: 97%
+[2024-12-05 12:45:14] [INFO] ROSE watered with 10 units.
+[2024-12-05 12:45:14] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-05 12:45:14] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-05 12:45:14] [INFO] TULSI watered with 10 units.
+[2024-12-05 12:45:14] [INFO] TULSI's health decreased by 10. Current health: 90%
+[2024-12-05 12:45:14] [WARNING] TULSI has been overwatered and its health decreased.
+[2024-12-05 12:45:14] [INFO] ASHOKA watered with 10 units.
+[2024-12-05 12:45:14] [INFO] ASHOKA's health decreased by 10. Current health: 90%
+[2024-12-05 12:45:14] [WARNING] ASHOKA has been overwatered and its health decreased.
+[2024-12-05 12:45:14] [INFO] SUNFLOWER watered with 10 units.
+[2024-12-05 12:45:14] [INFO] SUNFLOWER's health decreased by 10. Current health: 90%
+[2024-12-05 12:45:14] [WARNING] SUNFLOWER has been overwatered and its health decreased.
+[2024-12-05 12:45:26] [INFO] ROSE's health decreased by 10. Current health: 80%
+[2024-12-05 12:45:26] [INFO] ROSE's health decreased by 8. Current health: 72%
+[2024-12-05 12:45:26] [INFO] TULSI's health decreased by 5. Current health: 85%
+[2024-12-05 12:45:26] [INFO] SUNFLOWER's health decreased by 15. Current health: 75%
+[2024-12-05 12:48:28] [INFO] ASHOKA watered with 10 units.
+[2024-12-05 12:48:28] [INFO] ASHOKA's health decreased by 10. Current health: 90%
+[2024-12-05 12:48:28] [WARNING] ASHOKA has been overwatered and its health decreased.
+[2024-12-05 12:48:28] [INFO] SUNFLOWER watered with 10 units.
+[2024-12-05 12:48:28] [INFO] SUNFLOWER's health decreased by 10. Current health: 90%
+[2024-12-05 12:48:28] [WARNING] SUNFLOWER has been overwatered and its health decreased.
+[2024-12-05 12:48:28] [INFO] TULSI watered with 10 units.
+[2024-12-05 12:48:28] [INFO] TULSI's health decreased by 10. Current health: 90%
+[2024-12-05 12:48:28] [WARNING] TULSI has been overwatered and its health decreased.
+[2024-12-05 12:50:22] [INFO] ROSE watered with 10 units.
+[2024-12-05 12:50:22] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-05 12:50:22] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-05 12:50:22] [INFO] ASHOKA watered with 10 units.
+[2024-12-05 12:50:22] [INFO] ASHOKA's health decreased by 10. Current health: 90%
+[2024-12-05 12:50:22] [WARNING] ASHOKA has been overwatered and its health decreased.
+[2024-12-05 12:53:09] [INFO] ROSE watered with 10 units.
+[2024-12-05 12:53:09] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-05 12:53:09] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-05 12:53:40] [INFO] ROSE watered with 10 units.
+[2024-12-05 12:53:40] [INFO] ROSE's health decreased by 10. Current health: 90%
+[2024-12-05 12:53:40] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-05 12:53:45] [INFO] ROSE watered with 10 units.
+[2024-12-05 12:53:45] [INFO] ROSE's health decreased by 10. Current health: 80%
+[2024-12-05 12:53:45] [WARNING] ROSE has been overwatered and its health decreased.
+[2024-12-05 14:06:24] [INFO] GANJA's health decreased by 5. Current health: 95%
+[2024-12-05 14:06:24] [INFO] GANJA's health decreased by 5. Current health: 95%
+[2024-12-05 14:06:24] [INFO] GANJA's health decreased by 5. Current health: 95%
+[2024-12-05 14:06:24] [INFO] GANJA's health decreased by 5. Current health: 95%
