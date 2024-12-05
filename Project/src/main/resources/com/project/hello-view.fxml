@@ -22,9 +22,6 @@
 
     <!-- Buttons Section -->
     <HBox spacing="10" alignment="CENTER">
-
-
-
         <Button text="Add Plant" fx:id="addPlantButton" />
         <Button text="Watering" fx:id="wateringButton" />
         <Button text="Attack" fx:id="attackButton" />
@@ -33,7 +30,6 @@
 
     <!-- Garden Grid -->
     <GridPane fx:id="gardenGrid" hgap="5" vgap="5" alignment="CENTER">
-        <!-- A 5x5 Grid to Represent the Garden -->
-        <Label text=" " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <!-- Dynamically populated by Java code -->
     </GridPane>
 </VBox>

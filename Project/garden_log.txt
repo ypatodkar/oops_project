@@ -1,0 +1,266 @@
+[2024-12-03 19:47:23] [INFO] No plant selected.
+[2024-12-03 19:47:23] [INFO] No plant selected.
+[2024-12-03 19:49:18] [INFO] No plant selected.
+[2024-12-03 21:27:43] [INFO] Plant 32 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 12 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 54 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 51 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 2 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 45 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 53 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 1 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 44 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 40 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 43 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 14 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 52 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 50 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 41 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 3 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 4 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 33 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 42 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 55 watered with 10 units.
+[2024-12-03 21:27:43] [INFO] Plant 0 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 1 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 1's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 1 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 9 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 9's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 9 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 2 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 2's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 2 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 3 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 3's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 3 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 10 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 10's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 10 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 16 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 16's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 16 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 0 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 0 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 8 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 8's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 8 has been overwatered and its health decreased.
+[2024-12-04 10:47:02] [INFO] Plant 11 watered with 10 units.
+[2024-12-04 10:47:02] [INFO] Plant 11's health decreased by 10. Current health: 90%
+[2024-12-04 10:47:02] [WARNING] Plant 11 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 1 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 1's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 1 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 9 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 9's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 9 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 2 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 2's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 2 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 3 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 3's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 3 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 10 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 10's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 10 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 16 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 16's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 16 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 0 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 0's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 0 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 8 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 8's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 8 has been overwatered and its health decreased.
+[2024-12-04 10:47:07] [INFO] Plant 11 watered with 10 units.
+[2024-12-04 10:47:07] [INFO] Plant 11's health decreased by 10. Current health: 80%
+[2024-12-04 10:47:07] [WARNING] Plant 11 has been overwatered and its health decreased.
+[2024-12-04 10:47:17] [INFO] Plant 1's health decreased by 20. Current health: 60%
+[2024-12-04 10:47:17] [INFO] Plant 9's health decreased by 10. Current health: 70%
+[2024-12-04 10:47:17] [INFO] Plant 9's health decreased by 8. Current health: 62%
+[2024-12-04 10:47:17] [INFO] Plant 2's health decreased by 20. Current health: 60%
+[2024-12-04 10:47:17] [INFO] Plant 3's health decreased by 20. Current health: 60%
+[2024-12-04 10:47:17] [INFO] Plant 10's health decreased by 10. Current health: 70%
+[2024-12-04 10:47:17] [INFO] Plant 10's health decreased by 8. Current health: 62%
+[2024-12-04 10:47:17] [INFO] Plant 16's health decreased by 10. Current health: 70%
+[2024-12-04 10:47:17] [INFO] Plant 16's health decreased by 8. Current health: 62%
+[2024-12-04 10:47:17] [INFO] Plant 0's health decreased by 20. Current health: 60%
+[2024-12-04 10:47:17] [INFO] Plant 8's health decreased by 10. Current health: 70%
+[2024-12-04 10:47:17] [INFO] Plant 8's health decreased by 8. Current health: 62%
+[2024-12-04 10:47:17] [INFO] Plant 11's health decreased by 10. Current health: 70%
+[2024-12-04 10:47:17] [INFO] Plant 11's health decreased by 8. Current health: 62%
+[2024-12-04 10:47:39] [INFO] Plant 10's health increased by 5. Current health: 67%
+[2024-12-04 10:47:39] [INFO] Plant 1's health increased by 5. Current health: 65%
+[2024-12-04 10:47:39] [INFO] Plant 16's health increased by 5. Current health: 67%
+[2024-12-04 10:47:39] [INFO] Plant 2's health increased by 5. Current health: 65%
+[2024-12-04 10:47:39] [INFO] Plant 3's health increased by 5. Current health: 65%
+[2024-12-04 10:47:39] [INFO] Plant 8's health increased by 5. Current health: 67%
+[2024-12-04 10:47:39] [INFO] Plant 9's health increased by 5. Current health: 67%
+[2024-12-04 10:47:39] [INFO] Plant 0's health increased by 5. Current health: 65%
+[2024-12-04 10:47:39] [INFO] Plant 11's health increased by 5. Current health: 67%
+[2024-12-04 10:47:54] [INFO] Plant 16's health increased by 5. Current health: 72%
+[2024-12-04 10:47:54] [INFO] Plant 11's health increased by 5. Current health: 72%
+[2024-12-04 10:47:54] [INFO] Plant 9's health increased by 5. Current health: 72%
+[2024-12-04 10:47:54] [INFO] Plant 2's health increased by 5. Current health: 70%
+[2024-12-04 10:47:54] [INFO] Plant 3's health increased by 5. Current health: 70%
+[2024-12-04 10:47:54] [INFO] Plant 8's health increased by 5. Current health: 72%
+[2024-12-04 10:47:54] [INFO] Plant 0's health increased by 5. Current health: 70%
+[2024-12-04 10:47:54] [INFO] Plant 1's health increased by 5. Current health: 70%
+[2024-12-04 10:47:54] [INFO] Plant 10's health increased by 5. Current health: 72%
+[2024-12-04 12:11:58] [INFO] Plant 18 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 18's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 18 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 32 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 32's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 32 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 36 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 36's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 36 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 35 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 35's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 35 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 34 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 34's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 34 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 17 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 17's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 17 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 19 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 19's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 19 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 33 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 33's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 33 has been overwatered and its health decreased.
+[2024-12-04 12:11:58] [INFO] Plant 16 watered with 22 units.
+[2024-12-04 12:11:58] [INFO] Plant 16's health decreased by 10. Current health: 90%
+[2024-12-04 12:11:58] [WARNING] Plant 16 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 18 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 18's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 18 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 32 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 32's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 32 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 36 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 36's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 36 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 35 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 35's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 35 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 34 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 34's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 34 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 17 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 17's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 17 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 19 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 19's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 19 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 33 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 33's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 33 has been overwatered and its health decreased.
+[2024-12-04 12:12:22] [INFO] Plant 16 watered with 55 units.
+[2024-12-04 12:12:22] [INFO] Plant 16's health decreased by 10. Current health: 80%
+[2024-12-04 12:12:22] [WARNING] Plant 16 has been overwatered and its health decreased.
+[2024-12-04 15:53:10] [INFO] Plant 10's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 10's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 2's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 2's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 9's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 9's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 0's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 16's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 16's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 18's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 18's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 8's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 8's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 17's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 17's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:10] [INFO] Plant 1's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:10] [INFO] Plant 1's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:51] [INFO] Plant 2's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:51] [INFO] Plant 2's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:51] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:51] [INFO] Plant 0's health decreased by 8. Current health: 82%
+[2024-12-04 15:53:51] [INFO] Plant 1's health decreased by 10. Current health: 90%
+[2024-12-04 15:53:51] [INFO] Plant 1's health decreased by 8. Current health: 82%
+[2024-12-04 15:54:09] [INFO] Plant 2's health decreased by 18. Current health: 64%
+[2024-12-04 15:54:09] [INFO] Plant 0's health decreased by 18. Current health: 64%
+[2024-12-04 15:54:09] [INFO] Plant 1's health decreased by 18. Current health: 64%
+[2024-12-04 15:54:38] [INFO] Plant 0's health increased by 5. Current health: 69%
+[2024-12-04 15:54:38] [INFO] Plant 2's health increased by 5. Current health: 69%
+[2024-12-04 15:54:38] [INFO] Plant 1's health increased by 5. Current health: 69%
+[2024-12-04 15:54:53] [INFO] Plant 2's health increased by 5. Current health: 74%
+[2024-12-04 15:54:53] [INFO] Plant 0's health increased by 5. Current health: 74%
+[2024-12-04 15:54:53] [INFO] Plant 1's health increased by 5. Current health: 74%
+[2024-12-04 15:55:08] [INFO] Plant 0's health increased by 5. Current health: 79%
+[2024-12-04 15:55:08] [INFO] Plant 2's health increased by 5. Current health: 79%
+[2024-12-04 15:55:08] [INFO] Plant 1's health increased by 5. Current health: 79%
+[2024-12-04 15:55:23] [INFO] Plant 0's health increased by 5. Current health: 84%
+[2024-12-04 15:55:23] [INFO] Plant 2's health increased by 5. Current health: 84%
+[2024-12-04 15:55:23] [INFO] Plant 1's health increased by 5. Current health: 84%
+[2024-12-04 15:55:38] [INFO] Plant 0's health increased by 5. Current health: 89%
+[2024-12-04 15:55:38] [INFO] Plant 2's health increased by 5. Current health: 89%
+[2024-12-04 15:55:38] [INFO] Plant 1's health increased by 5. Current health: 89%
+[2024-12-04 15:55:53] [INFO] Plant 0's health increased by 5. Current health: 94%
+[2024-12-04 15:55:53] [INFO] Plant 2's health increased by 5. Current health: 94%
+[2024-12-04 15:55:53] [INFO] Plant 1's health increased by 5. Current health: 94%
+[2024-12-04 15:56:08] [INFO] Plant 0's health increased by 5. Current health: 99%
+[2024-12-04 15:56:08] [INFO] Plant 2's health increased by 5. Current health: 99%
+[2024-12-04 15:56:08] [INFO] Plant 1's health increased by 5. Current health: 99%
+[2024-12-04 15:56:23] [INFO] Plant 0's health increased by 5. Current health: 100%
+[2024-12-04 15:56:23] [INFO] Plant 2's health increased by 5. Current health: 100%
+[2024-12-04 15:56:23] [INFO] Plant 1's health increased by 5. Current health: 100%
+[2024-12-04 15:56:38] [INFO] Plant 2's health increased by 5. Current health: 100%
+[2024-12-04 15:56:38] [INFO] Plant 0's health increased by 5. Current health: 100%
+[2024-12-04 15:56:38] [INFO] Plant 1's health increased by 5. Current health: 100%
+[2024-12-04 17:20:22] [INFO] Plant 0's health decreased by 10. Current health: 90%
+[2024-12-04 17:20:22] [INFO] Plant 0's health decreased by 8. Current health: 82%
+[2024-12-04 17:20:22] [INFO] Plant 3's health decreased by 10. Current health: 90%
+[2024-12-04 17:20:22] [INFO] Plant 3's health decreased by 8. Current health: 82%
+[2024-12-04 17:20:22] [INFO] Plant 1's health decreased by 10. Current health: 90%
+[2024-12-04 17:20:22] [INFO] Plant 1's health decreased by 8. Current health: 82%
+[2024-12-04 17:20:22] [INFO] Plant 2's health decreased by 10. Current health: 90%
+[2024-12-04 17:20:22] [INFO] Plant 2's health decreased by 8. Current health: 82%
+[2024-12-04 17:20:23] [INFO] Plant 0's health decreased by 18. Current health: 64%
+[2024-12-04 17:20:23] [INFO] Plant 3's health decreased by 18. Current health: 64%
+[2024-12-04 17:20:23] [INFO] Plant 1's health decreased by 18. Current health: 64%
+[2024-12-04 17:20:23] [INFO] Plant 2's health decreased by 18. Current health: 64%
+[2024-12-04 17:20:53] [INFO] Plant 0's health decreased by 18. Current health: 46%
+[2024-12-04 17:20:53] [INFO] Plant 3's health decreased by 18. Current health: 46%
+[2024-12-04 17:20:53] [INFO] Plant 1's health decreased by 18. Current health: 46%
+[2024-12-04 17:20:53] [INFO] Plant 2's health decreased by 18. Current health: 46%
+[2024-12-04 17:21:19] [INFO] Plant 1's health increased by 5. Current health: 51%
+[2024-12-04 17:21:19] [INFO] Plant 0's health increased by 5. Current health: 51%
+[2024-12-04 17:21:19] [INFO] Plant 3's health increased by 5. Current health: 51%
+[2024-12-04 17:21:19] [INFO] Plant 2's health increased by 5. Current health: 51%
+[2024-12-04 17:21:34] [INFO] Plant 2's health increased by 5. Current health: 56%
+[2024-12-04 17:21:34] [INFO] Plant 0's health increased by 5. Current health: 56%
+[2024-12-04 17:21:34] [INFO] Plant 1's health increased by 5. Current health: 56%
+[2024-12-04 17:21:34] [INFO] Plant 3's health increased by 5. Current health: 56%
+[2024-12-04 17:21:42] [INFO] Plant 0 watered with 22 units.
+[2024-12-04 17:21:42] [INFO] Plant 0's health decreased by 10. Current health: 46%
+[2024-12-04 17:21:42] [WARNING] Plant 0 has been overwatered and its health decreased.
+[2024-12-04 17:21:43] [INFO] Plant 3 watered with 22 units.
+[2024-12-04 17:21:43] [INFO] Plant 3's health decreased by 10. Current health: 46%
+[2024-12-04 17:21:43] [WARNING] Plant 3 has been overwatered and its health decreased.
+[2024-12-04 17:21:43] [INFO] Plant 1 watered with 22 units.
+[2024-12-04 17:21:43] [INFO] Plant 1's health decreased by 10. Current health: 46%
+[2024-12-04 17:21:43] [WARNING] Plant 1 has been overwatered and its health decreased.
+[2024-12-04 17:21:43] [INFO] Plant 2 watered with 22 units.
+[2024-12-04 17:21:43] [INFO] Plant 2's health decreased by 10. Current health: 46%
+[2024-12-04 17:21:43] [WARNING] Plant 2 has been overwatered and its health decreased.
+[2024-12-04 17:21:49] [INFO] Plant 1's health increased by 5. Current health: 51%
+[2024-12-04 17:21:49] [INFO] Plant 2's health increased by 5. Current health: 51%
+[2024-12-04 17:21:49] [INFO] Plant 0's health increased by 5. Current health: 51%
+[2024-12-04 17:21:49] [INFO] Plant 3's health increased by 5. Current health: 51%
+[2024-12-04 17:22:04] [INFO] Plant 1's health increased by 5. Current health: 56%
+[2024-12-04 17:22:04] [INFO] Plant 0's health increased by 5. Current health: 56%
+[2024-12-04 17:22:04] [INFO] Plant 2's health increased by 5. Current health: 56%
+[2024-12-04 17:22:04] [INFO] Plant 3's health increased by 5. Current health: 56%
+[2024-12-04 17:22:19] [INFO] Plant 1's health increased by 5. Current health: 61%
+[2024-12-04 17:22:19] [INFO] Plant 0's health increased by 5. Current health: 61%
+[2024-12-04 17:22:19] [INFO] Plant 3's health increased by 5. Current health: 61%
+[2024-12-04 17:22:19] [INFO] Plant 2's health increased by 5. Current health: 61%

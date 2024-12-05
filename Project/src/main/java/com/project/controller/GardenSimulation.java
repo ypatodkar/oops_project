@@ -1,5 +1,8 @@
 package com.project.controller;
 
+import com.project.factory.PlantFactory;
+import com.project.factory.PlantType;
+import com.project.modules.Plant;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -8,17 +11,20 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GardenSimulation extends Application {
 
-    private final int GRID_SIZE = 10;
+    private final int GRID_SIZE = 8;
     private Button[][] gridButtons = new Button[GRID_SIZE][GRID_SIZE];
-    private String selectedPlant = null;
-    private Map<String, String> plantEmojis = new HashMap<>();
+    private PlantType selectedPlantType = null;
+    private Map<Button, Plant> plantMap = new HashMap<>();
+    private Map<String, List<String>> pestVulnerabilities = new HashMap<>();
+    private Map<String, Map<String, Integer>> insectDamageMap = new HashMap<>();
+    private Map<Button, List<String>> activeInsectsMap = new HashMap<>();
     private TextArea logArea;
     private Label currentDayLabel;
     private Label currentDateLabel;
@@ -32,16 +38,65 @@ public class GardenSimulation extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Initialize plant emojis
-        plantEmojis.put("Rose", "🌹");
-        plantEmojis.put("Jasmine", "🌼");
-        plantEmojis.put("Lily", "🌷");
-        plantEmojis.put("Sunflower", "🌻");
-        plantEmojis.put("Tulsi", "🌿");
+        initializePestVulnerabilities();
+        initializeInsectData();
+
 
         BorderPane mainLayout = new BorderPane();
 
-        // Top Section
+        HBox topSection = initializeTopSection();
+        VBox leftSidebar = initializeLeftSidebar();
+        GridPane gardenGrid = initializeGardenGrid();
+
+        VBox rightSection = new VBox();
+        rightSection.setSpacing(10);
+        rightSection.setPadding(new Insets(10));
+        rightSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        Label logLabel = new Label("Event Log");
+        logLabel.setFont(new Font("Arial", 16));
+        logArea = new TextArea();
+        logArea.setEditable(false);
+        logArea.setPrefWidth(350);
+        logArea.setPrefHeight(300);
+        rightSection.getChildren().addAll(logLabel, logArea);
+
+        mainLayout.setTop(topSection);
+        mainLayout.setLeft(leftSidebar);
+        mainLayout.setCenter(gardenGrid);
+        mainLayout.setRight(rightSection);
+
+        Scene scene = new Scene(mainLayout, 1200, 800);
+        URL cssResource = getClass().getResource("/css/styles.css");
+        if (cssResource != null) {
+            scene.getStylesheets().add(cssResource.toExternalForm());
+        } else {
+            System.err.println("CSS file not found. Please ensure that 'styles.css' is located in the '/css/' directory within 'resources'.");
+        }
+
+        primaryStage.setTitle("Garden Simulation System");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        startWaterReductionTimer();
+        startDayIncrementTimer();
+    }
+
+    private void initializePestVulnerabilities() {
+        pestVulnerabilities.put(PlantType.ROSE.name(), Arrays.asList("Insect A", "Insect B"));
+        pestVulnerabilities.put(PlantType.SUNFLOWER.name(), Arrays.asList("Insect A", "Insect C"));
+        pestVulnerabilities.put(PlantType.ASHOKA.name(), Collections.singletonList("Insect D"));
+        pestVulnerabilities.put(PlantType.MANGO.name(), Arrays.asList("Insect B", "Insect C"));
+        pestVulnerabilities.put(PlantType.TULSI.name(), Collections.singletonList("Insect A"));
+    }
+
+    private void initializeInsectData() {
+        insectDamageMap.put("Insect A", Map.of(PlantType.ROSE.name(), 10, PlantType.SUNFLOWER.name(), 15, PlantType.TULSI.name(), 5));
+        insectDamageMap.put("Insect B", Map.of(PlantType.ROSE.name(), 8, PlantType.ASHOKA.name(), 12));
+        insectDamageMap.put("Insect C", Map.of(PlantType.SUNFLOWER.name(), 10, PlantType.MANGO.name(), 7));
+        insectDamageMap.put("Insect D", Map.of(PlantType.ASHOKA.name(), 20));
+    }
+
+    private HBox initializeTopSection() {
         HBox topSection = new HBox();
         topSection.setSpacing(20);
         topSection.setPadding(new Insets(10));
@@ -54,171 +109,435 @@ public class GardenSimulation extends Application {
 
         topSection.getChildren().addAll(currentDayLabel, currentDateLabel, currentTimeLabel, currentTempLabel);
 
-        // Update time regularly
         Thread timeUpdater = new Thread(() -> {
             while (true) {
                 try {
                     Thread.sleep(1000);
-//                    currentTimeLabel.setText("Time: " + getCurrentTime());
-                    Platform.runLater(() -> {
-                        currentTimeLabel.setText("Time: " + getCurrentTime());
-                    });
-
-                } catch (InterruptedException ignored) {
-                }
+                    Platform.runLater(() -> currentTimeLabel.setText("Time: " + getCurrentTime()));
+                } catch (InterruptedException ignored) {}
             }
         });
         timeUpdater.setDaemon(true);
         timeUpdater.start();
 
-        // Left Sidebar
+        return topSection;
+    }
+
+    private VBox initializeLeftSidebar() {
         VBox leftSidebar = new VBox();
         leftSidebar.setSpacing(20);
         leftSidebar.setPadding(new Insets(20));
 
-        // Add Plant Section
-        VBox addPlantSection = new VBox();
-        addPlantSection.setSpacing(10);
-        addPlantSection.setPadding(new Insets(10));
-        addPlantSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
-        Label addPlantLabel = new Label("Add Plant");
-        addPlantLabel.setFont(new Font("Arial", 16));
+        VBox addPlantSection = createAddPlantSection();
+        VBox addWaterSection = createAddWaterSection();
+        VBox setTempSection = createSetTemperatureSection();
+        VBox insectAttackSection = createInsectAttackSection();
+        VBox applyPestControlSection = createApplyPestControlSection();
 
-        Button roseButton = new Button("🌹 Rose");
-        roseButton.setOnAction(e -> selectedPlant = "Rose");
+        leftSidebar.getChildren().addAll(addPlantSection, addWaterSection, setTempSection, insectAttackSection, applyPestControlSection);
+        return leftSidebar;
+    }
 
-        Button jasmineButton = new Button("🌼 Jasmine");
-        jasmineButton.setOnAction(e -> selectedPlant = "Jasmine");
+    private VBox createAddPlantSection() {
+        VBox section = new VBox();
+        section.setSpacing(10);
+        section.setPadding(new Insets(10));
+        section.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
 
-        Button lilyButton = new Button("🌷 Lily");
-        lilyButton.setOnAction(e -> selectedPlant = "Lily");
+        Label label = new Label("Add Plant");
+        label.setFont(new Font("Arial", 16));
 
-        Button sunflowerButton = new Button("🌻 Sunflower");
-        sunflowerButton.setOnAction(e -> selectedPlant = "Sunflower");
+        // Initialize ToggleGroup
+        ToggleGroup plantToggleGroup = new ToggleGroup();
 
-        Button tulsiButton = new Button("🌿 Tulsi");
-        tulsiButton.setOnAction(e -> selectedPlant = "Tulsi");
+        // Create ToggleButtons for each PlantType
+        ToggleButton roseButton = new ToggleButton("🌹 Rose");
+        roseButton.setToggleGroup(plantToggleGroup);
+        roseButton.setUserData(PlantType.ROSE);
+        roseButton.getStyleClass().add("plant-toggle-button"); // For CSS styling
 
-        addPlantSection.getChildren().addAll(addPlantLabel, roseButton, jasmineButton, lilyButton, sunflowerButton, tulsiButton);
+        ToggleButton ashokaButton = new ToggleButton("🌲 Ashoka");
+        ashokaButton.setToggleGroup(plantToggleGroup);
+        ashokaButton.setUserData(PlantType.ASHOKA);
+        ashokaButton.getStyleClass().add("plant-toggle-button");
 
-        // Add Water Section
-        VBox addWaterSection = new VBox();
-        addWaterSection.setSpacing(10);
-        addWaterSection.setPadding(new Insets(10));
-        addWaterSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
-        Label addWaterLabel = new Label("Add Water");
-        addWaterLabel.setFont(new Font("Arial", 16));
+        ToggleButton mangoButton = new ToggleButton("🥭 Mango");
+        mangoButton.setToggleGroup(plantToggleGroup);
+        mangoButton.setUserData(PlantType.MANGO);
+        mangoButton.getStyleClass().add("plant-toggle-button");
+
+        ToggleButton sunflowerButton = new ToggleButton("🌻 Sunflower");
+        sunflowerButton.setToggleGroup(plantToggleGroup);
+        sunflowerButton.setUserData(PlantType.SUNFLOWER);
+        sunflowerButton.getStyleClass().add("plant-toggle-button");
+
+        ToggleButton tulsiButton = new ToggleButton("🌿 Tulsi");
+        tulsiButton.setToggleGroup(plantToggleGroup);
+        tulsiButton.setUserData(PlantType.TULSI);
+        tulsiButton.getStyleClass().add("plant-toggle-button");
+
+        // Listener to handle selection changes
+        plantToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            if (newToggle != null) {
+                selectedPlantType = (PlantType) newToggle.getUserData();
+                logArea.appendText(getCurrentTime() + ": Selected Plant Type: " + selectedPlantType.name() + "\n");
+            } else {
+                selectedPlantType = null;
+                logArea.appendText(getCurrentTime() + ": No Plant Type Selected.\n");
+            }
+        });
+
+        // Optional: Add a "Clear Selection" button
+        Button clearSelectionButton = new Button("Clear Selection");
+        clearSelectionButton.setOnAction(e -> plantToggleGroup.selectToggle(null));
+        clearSelectionButton.setStyle("-fx-pref-width: 120px; -fx-pref-height: 40px;");
+
+        section.getChildren().addAll(label, roseButton, ashokaButton, mangoButton, sunflowerButton, tulsiButton, clearSelectionButton);
+        return section;
+    }
+
+    private VBox createAddWaterSection() {
+        VBox section = new VBox();
+        section.setSpacing(10);
+        section.setPadding(new Insets(10));
+        section.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        Label label = new Label("Add Water");
+        label.setFont(new Font("Arial", 16));
 
         Button addWaterButton = new Button("💧 Add Water");
+        String existingStyle = addWaterButton.getStyle();
+        addWaterButton.setStyle(existingStyle + " -fx-pref-width: 120px; -fx-pref-height: 70px;");
+
+
         addWaterButton.setOnAction(e -> showAddWaterPopup());
 
-        addWaterSection.getChildren().addAll(addWaterLabel, addWaterButton);
+        section.getChildren().addAll(label, addWaterButton);
+        return section;
+    }
 
-        // Set Temperature Section
-        VBox setTempSection = new VBox();
-        setTempSection.setSpacing(10);
-        setTempSection.setPadding(new Insets(10));
-        setTempSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
-        Label setTempLabel = new Label("Set Temperature");
-        setTempLabel.setFont(new Font("Arial", 16));
+    private VBox createSetTemperatureSection() {
+        VBox section = new VBox();
+        section.setSpacing(10);
+        section.setPadding(new Insets(10));
+        section.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        Label label = new Label("Set Temperature");
+        label.setFont(new Font("Arial", 16));
 
         Button setTempButton = new Button("🌡️ Set Temp");
         setTempButton.setOnAction(e -> showSetTemperaturePopup());
 
-        setTempSection.getChildren().addAll(setTempLabel, setTempButton);
+        section.getChildren().addAll(label, setTempButton);
+        return section;
+    }
 
-        // Attack Section
-        VBox attackSection = new VBox();
-        attackSection.setSpacing(10);
-        attackSection.setPadding(new Insets(10));
-        attackSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
-        Label attackLabel = new Label("Attack");
-        attackLabel.setFont(new Font("Arial", 16));
+    private VBox createInsectAttackSection() {
+        VBox section = new VBox();
+        section.setSpacing(10);
+        section.setPadding(new Insets(10));
+        section.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        Label label = new Label("Insect Attack");
+        label.setFont(new Font("Arial", 16));
 
-        Button attackButton = new Button("⚔️ Attack");
-        attackButton.setOnAction(e -> showAttackPopup());
+        Button insectAttackButton = new Button("🪲 Attack");
+        insectAttackButton.setOnAction(e -> showInsectAttackPopup());
 
-        attackSection.getChildren().addAll(attackLabel, attackButton);
+        section.getChildren().addAll(label, insectAttackButton);
+        return section;
+    }
 
-        // Add all sections to sidebar
-        leftSidebar.getChildren().addAll(addPlantSection, addWaterSection, setTempSection, attackSection);
+    private VBox createApplyPestControlSection() {
+        VBox section = new VBox();
+        section.setSpacing(10);
+        section.setPadding(new Insets(10));
+        section.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        Label label = new Label("Apply Pest Control");
+        label.setFont(new Font("Arial", 16));
 
-        // Center Garden Grid
+        Button applyPestControlButton = new Button("🧴 Pest Control");
+        applyPestControlButton.setOnAction(e -> showApplyPestControlPopup());
+
+        section.getChildren().addAll(label, applyPestControlButton);
+        return section;
+    }
+
+    private void showApplyPestControlPopup() {
+        Stage popup = new Stage();
+        popup.setTitle("Select Pest Control");
+
+        VBox layout = new VBox();
+        layout.setSpacing(10);
+        layout.setPadding(new Insets(10));
+
+        CheckBox pestA = new CheckBox("🧴 Pest A");
+        CheckBox pestB = new CheckBox("🧴 Pest B");
+        CheckBox pestC = new CheckBox("🧴 Pest C");
+        CheckBox pestD = new CheckBox("🧴 Pest D");
+
+        Button applyButton = new Button("Apply");
+        applyButton.setOnAction(e -> {
+            List<String> selectedPests = new ArrayList<>();
+            if (pestA.isSelected()) selectedPests.add("Pest A");
+            if (pestB.isSelected()) selectedPests.add("Pest B");
+            if (pestC.isSelected()) selectedPests.add("Pest C");
+            if (pestD.isSelected()) selectedPests.add("Pest D");
+
+            if (!selectedPests.isEmpty()) {
+                for (Button gridButton : activeInsectsMap.keySet()) {
+                    List<String> activeInsects = activeInsectsMap.get(gridButton);
+                    if (activeInsects != null && !activeInsects.isEmpty()) {
+                        List<String> removedInsects = new ArrayList<>();
+                        for (String insect : activeInsects) {
+                            switch (insect) {
+                                case "Insect A":
+                                    if (selectedPests.contains("Pest A")) removedInsects.add(insect);
+                                    break;
+                                case "Insect B":
+                                    if (selectedPests.contains("Pest B")) removedInsects.add(insect);
+                                    break;
+                                case "Insect C":
+                                    if (selectedPests.contains("Pest C")) removedInsects.add(insect);
+                                    break;
+                                case "Insect D":
+                                    if (selectedPests.contains("Pest D")) removedInsects.add(insect);
+                                    break;
+                            }
+                        }
+                        activeInsects.removeAll(removedInsects);
+
+                        if (removedInsects.size() > 0) {
+                            updateGridButtonText(gridButton, plantMap.get(gridButton));
+                            logArea.appendText(getCurrentTime() + ": Pest control applied at grid (" +
+                                    ((int[]) gridButton.getUserData())[0] + ", " +
+                                    ((int[]) gridButton.getUserData())[1] + "). Removed insects: " +
+                                    String.join(", ", removedInsects) + "\n");
+
+                            // Start health recovery for this plant
+                            startHealthRecovery(gridButton);
+                        }
+                    }
+                }
+            }
+            popup.close();
+        });
+
+        layout.getChildren().addAll(new Label("Select Pests to Apply:"), pestA, pestB, pestC, pestD, applyButton);
+
+        Scene popupScene = new Scene(layout, 300, 250);
+        popup.setScene(popupScene);
+        popup.show();
+    }
+
+    private void startHealthRecovery(Button gridButton) {
+        Plant plant = plantMap.get(gridButton);
+
+        if (plant != null) {
+            Thread healthRecoveryThread = new Thread(() -> {
+                while (plant.getHealth() < 100) {
+                    try {
+                        Thread.sleep(15000); // 15 seconds interval
+                        Platform.runLater(() -> {
+                            plant.increaseHealth(5); // Increase health by 5%
+                            updateGridButtonText(gridButton, plant);
+                            logArea.appendText(getCurrentTime() + ": Health of " + plant.getName() +
+                                    " at grid (" + ((int[]) gridButton.getUserData())[0] + ", " +
+                                    ((int[]) gridButton.getUserData())[1] + ") increased by 5%. Current health: " + plant.getHealth() + "%\n");
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            healthRecoveryThread.setDaemon(true);
+            healthRecoveryThread.start();
+        }
+    }
+
+    private void showInsectAttackPopup() {
+        Stage popup = new Stage();
+        popup.setTitle("Select Insects");
+
+        VBox layout = new VBox();
+        layout.setSpacing(10);
+        layout.setPadding(new Insets(10));
+
+        CheckBox insectA = new CheckBox("🪲 Insect A");
+        CheckBox insectB = new CheckBox("🐜 Insect B");
+        CheckBox insectC = new CheckBox("🦗 Insect C");
+        CheckBox insectD = new CheckBox("🐞 Insect D");
+
+        Button attackButton = new Button("Attack");
+        attackButton.setOnAction(e -> {
+            List<String> selectedInsects = new ArrayList<>();
+            if (insectA.isSelected()) selectedInsects.add("Insect A");
+            if (insectB.isSelected()) selectedInsects.add("Insect B");
+            if (insectC.isSelected()) selectedInsects.add("Insect C");
+            if (insectD.isSelected()) selectedInsects.add("Insect D");
+
+            if (!selectedInsects.isEmpty()) {
+                for (Button gridButton : plantMap.keySet()) {
+                    Plant plant = plantMap.get(gridButton);
+                    if (plant != null) {
+                        for (String insect : selectedInsects) {
+                            if (pestVulnerabilities.getOrDefault(plant.getPlantType().name(), new ArrayList<>()).contains(insect)) {
+                                activeInsectsMap.computeIfAbsent(gridButton, k -> new ArrayList<>()).add(insect);
+                                int damage = insectDamageMap.getOrDefault(insect, new HashMap<>()).getOrDefault(plant.getPlantType().name(), 0);
+                                plant.decreaseHealth(damage);
+
+                                // Retrieve row and column from UserData
+                                int[] coordinates = (int[]) gridButton.getUserData();
+                                int row = coordinates[0];
+                                int col = coordinates[1];
+
+                                updateGridButtonText(gridButton, plant);
+                                logArea.appendText(getCurrentTime() + ": " + insect + " attacked " + plant.getName() +
+                                        " at grid (" + row + ", " + col + "). Damage: " + damage + "\n");
+                            }
+                        }
+                    }
+                }
+            }
+            popup.close();
+        });
+
+        layout.getChildren().addAll(new Label("Select Insects to Attack:"), insectA, insectB, insectC, insectD, attackButton);
+
+        Scene popupScene = new Scene(layout, 300, 250);
+        popup.setScene(popupScene);
+        popup.show();
+    }
+
+    private GridPane initializeGardenGrid() {
         GridPane gardenGrid = new GridPane();
         gardenGrid.setPadding(new Insets(10));
-        gardenGrid.setHgap(5);
-        gardenGrid.setVgap(5);
+        gardenGrid.setHgap(5); // Spacing between columns
+        gardenGrid.setVgap(5); // Spacing between rows
 
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 Button gridButton = new Button();
-                gridButton.setPrefSize(50, 50);
-                gridButton.setStyle("-fx-background-color: #8B4513; -fx-border-color: black;");
+                gridButton.setPrefSize(120, 120);
+                gridButton.setStyle("-fx-background-color: #8B4513; -fx-border-color: black; -fx-font-size: 35px;-fx-pref-width: 120px;-fx-pref-height: 70px;");
+                gridButton.getStyleClass().add("grid-buttons");
+
                 int row = i;
                 int col = j;
 
-                // Hover effects
+                // Store row and column in button's UserData
+                gridButton.setUserData(new int[]{row, col});
+
                 gridButton.setOnMouseEntered(e -> {
                     if (gridButton.getText().isEmpty()) {
                         gridButton.setStyle("-fx-background-color: yellow; -fx-border-color: black;");
+//                        gridButton.setPrefSize(120, 120);
+
                     } else {
-                        gridButton.setStyle("-fx-background-color: red; -fx-border-color: black;");
+                        Plant plant = plantMap.get(gridButton);
+                        if (plant != null) {
+                            Tooltip tooltip = new Tooltip();
+
+                            // Create a VBox to hold the health and water indicators
+                            VBox tooltipContent = new VBox();
+                            tooltipContent.setSpacing(5);
+
+                            // Health Indicator
+                            Label healthLabel = new Label("Health: " + plant.getHealth() + "%");
+                            ProgressBar healthBar = new ProgressBar(plant.getHealth() / 100.0);
+                            healthBar.setPrefWidth(150);
+                            healthBar.getStyleClass().add("health-bar");
+
+                            // Assign additional CSS classes based on health percentage
+                            if (plant.getHealth() <= 30) {
+                                healthBar.getStyleClass().add("low");
+                            } else if (plant.getHealth() <= 70) {
+                                healthBar.getStyleClass().add("medium");
+                            }
+
+                            // Water Indicator
+                            Label waterLabel = new Label("Water: " + plant.getCurrentWaterLevel() + "%");
+                            ProgressBar waterBar = new ProgressBar(plant.getCurrentWaterLevel() / 100.0);
+                            waterBar.setPrefWidth(150);
+                            waterBar.getStyleClass().add("water-bar");
+
+                            // Assign additional CSS classes based on water percentage
+                            if (plant.getCurrentWaterLevel() <= 30) {
+                                waterBar.getStyleClass().add("low");
+                            } else if (plant.getCurrentWaterLevel() <= 70) {
+                                waterBar.getStyleClass().add("medium");
+                            }
+
+                            tooltipContent.getChildren().addAll(healthLabel, healthBar, waterLabel, waterBar);
+                            tooltip.setGraphic(tooltipContent);
+
+                            Tooltip.install(gridButton, tooltip);
+                        }
                     }
                 });
 
                 gridButton.setOnMouseExited(e -> {
                     if (gridButton.getText().isEmpty()) {
-                        gridButton.setStyle("-fx-background-color: #8B4513; -fx-border-color: black;");
+                        gridButton.setStyle("-fx-background-color: #8B4513; -fx-border-color: black;-fx-pref-width: 120px;-fx-pref-height: 70px;");
+//                        gridButton.setPrefSize(120, 120);
                     } else {
-                        gridButton.setStyle("-fx-background-color: green; -fx-border-color: black;");
+                        gridButton.setStyle("-fx-background-color: green; -fx-border-color: black;-fx-pref-width: 120px;-fx-pref-height: 70px;");
+//                        gridButton.setPrefSize(120, 120);
                     }
                 });
 
-                // Click event for planting
                 gridButton.setOnAction(e -> {
-                    if (selectedPlant != null && gridButton.getText().isEmpty()) {
-                        gridButton.setText(plantEmojis.get(selectedPlant)); // Display plant emoji
-                        gridButton.setStyle("-fx-background-color: green; -fx-border-color: black;");
-                        logArea.appendText("Placed " + selectedPlant + " (" + plantEmojis.get(selectedPlant) + ") at (" + row + ", " + col + ")\n");
+                    if (selectedPlantType != null && gridButton.getText().isEmpty()) {
+                        Plant plant = createPlant(selectedPlantType, "Plant " + (row * GRID_SIZE + col));
+                        gridButton.setText(selectedPlantType.getEmoji());
+                        gridButton.setStyle("-fx-background-color: green; -fx-border-color: black;-fx-pref-width: 120px;-fx-pref-height: 70px;");
+                        plantMap.put(gridButton, plant);
+                        logArea.appendText(getCurrentTime() + ": Planted " + plant.getName() + " at (" + row + ", " + col + ").\n");
                     } else if (!gridButton.getText().isEmpty()) {
-                        logArea.appendText("Grid (" + row + ", " + col + ") is already occupied.\n");
+                        logArea.appendText(getCurrentTime() + ": Grid (" + row + ", " + col + ") is already occupied.\n");
                     } else {
-                        logArea.appendText("No plant selected.\n");
+                        logArea.appendText(getCurrentTime() + ": No plant selected.\n");
                     }
                 });
 
-                gridButtons[i][j] = gridButton;
-                gardenGrid.add(gridButton, j, i); // Add to gridpane with corrected order
+                gardenGrid.add(gridButton, j, i);
             }
         }
-
-        // Event Log Section
-        VBox rightSection = new VBox();
-        rightSection.setSpacing(10);
-        rightSection.setPadding(new Insets(10));
-        rightSection.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
-        Label logLabel = new Label("Event Log");
-        logLabel.setFont(new Font("Arial", 16));
-        logArea = new TextArea();
-        logArea.setEditable(false);
-        logArea.setPrefWidth(200);
-        logArea.setPrefHeight(300);
-        rightSection.getChildren().addAll(logLabel, logArea);
-
-        // Set sections to the layout
-        mainLayout.setTop(topSection);
-        mainLayout.setLeft(leftSidebar);
-        mainLayout.setCenter(gardenGrid);
-        mainLayout.setRight(rightSection);
-
-        // Set the scene and stage
-        Scene scene = new Scene(mainLayout, 1200, 800);
-        primaryStage.setTitle("Garden Simulation System");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        return gardenGrid;
     }
 
-    // Show Add Water Popup
+    private void updateGridButtonText(Button gridButton, Plant plant) {
+        if (plant != null) {
+            StringBuilder buttonText = new StringBuilder();
+
+            // Add plant emoji and its status
+            buttonText.append(plant.getPlantType().getEmoji());
+
+            // Add active insect emojis, if any
+            List<String> activeInsects = activeInsectsMap.get(gridButton);
+            if (activeInsects != null && !activeInsects.isEmpty()) {
+                buttonText.append("\n");
+                for (String insect : activeInsects) {
+                    switch (insect) {
+                        case "Insect A":
+                            buttonText.append("🪲 ");
+                            break;
+                        case "Insect B":
+                            buttonText.append("🐜 ");
+                            break;
+                        case "Insect C":
+                            buttonText.append("🦗 ");
+                            break;
+                        case "Insect D":
+                            buttonText.append("🐞 ");
+                            break;
+                    }
+                }
+            }
+
+            gridButton.setText(buttonText.toString());
+            gridButton.setStyle(" -fx-text-alignment: center; -fx-background-color: green; -fx-border-color: black; -fx-pref-width: 120px;-fx-pref-height: 70px;");
+        }
+    }
+
     private void showAddWaterPopup() {
         Stage popup = new Stage();
         popup.setTitle("Add Water");
@@ -230,10 +549,16 @@ public class GardenSimulation extends Application {
         Spinner<Integer> waterSpinner = new Spinner<>(0, 100, 10);
         Button addWaterButton = new Button("Add Water");
         addWaterButton.setOnAction(e -> {
-            logArea.appendText("Added " + waterSpinner.getValue() + " units of water.\n");
+            int waterAmount = waterSpinner.getValue();
+            for (Plant plant : plantMap.values()) {
+                plant.water(waterAmount);
+                logArea.appendText(getCurrentTime() + ": Added " + waterAmount + " units of water to " + plant.getName() + ".\n");
+            }
+            for (Button gridButton : plantMap.keySet()) {
+                updateGridButtonText(gridButton, plantMap.get(gridButton));
+            }
             popup.close();
         });
-
 
         layout.getChildren().addAll(new Label("Select Water Amount:"), waterSpinner, addWaterButton);
 
@@ -242,7 +567,6 @@ public class GardenSimulation extends Application {
         popup.show();
     }
 
-    // Show Set Temperature Popup
     private void showSetTemperaturePopup() {
         Stage popup = new Stage();
         popup.setTitle("Set Temperature");
@@ -256,7 +580,7 @@ public class GardenSimulation extends Application {
         setTempButton.setOnAction(e -> {
             currentTemperature = tempSpinner.getValue();
             currentTempLabel.setText("Current Temp: " + currentTemperature + "°C");
-            logArea.appendText("Temperature set to " + currentTemperature + "°C.\n");
+            logArea.appendText(getCurrentTime() + ": Temperature set to " + currentTemperature + "°C.\n");
             popup.close();
         });
 
@@ -267,45 +591,135 @@ public class GardenSimulation extends Application {
         popup.show();
     }
 
-    // Show Attack Popup
-    private void showAttackPopup() {
-        Stage popup = new Stage();
-        popup.setTitle("Attack");
-
-        VBox layout = new VBox();
-        layout.setSpacing(10);
-        layout.setPadding(new Insets(10));
-
-        CheckBox pestA = new CheckBox("Aphids");
-        CheckBox pestB = new CheckBox("Caterpillars");
-        CheckBox pestC = new CheckBox("Mites");
-        CheckBox pestD = new CheckBox("Beetles");
-
-        Button startAttackButton = new Button("Start Attack");
-        startAttackButton.setOnAction(e -> {
-            StringBuilder pestsSelected = new StringBuilder("Attacked pests: ");
-            if (pestA.isSelected()) pestsSelected.append("Aphids ");
-            if (pestB.isSelected()) pestsSelected.append("Caterpillars ");
-            if (pestC.isSelected()) pestsSelected.append("Mites ");
-            if (pestD.isSelected()) pestsSelected.append("Beetles ");
-            logArea.appendText(pestsSelected.toString().trim() + ".\n");
-            popup.close();
-        });
-
-        layout.getChildren().addAll(new Label("Select Pests to Attack:"), pestA, pestB, pestC, pestD, startAttackButton);
-
-        Scene popupScene = new Scene(layout, 300, 250);
-        popup.setScene(popupScene);
-        popup.show();
-    }
-
-    // Utility method to get current date
     private String getCurrentDate() {
         return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     }
 
-    // Utility method to get current time
     private String getCurrentTime() {
         return new SimpleDateFormat("HH:mm:ss").format(new Date());
+    }
+
+    private Plant createPlant(PlantType type, String name) {
+        List<String> vulnerabilities = pestVulnerabilities.getOrDefault(type.name(), new ArrayList<>());
+        Object additionalParam = getAdditionalParamForPlantType(type);
+
+        // Create the plant with the necessary parameters
+        Plant plant = PlantFactory.createPlant(
+                type,
+                name,
+                5, // waterRequirement
+                vulnerabilities,
+                15, // temperatureToleranceLow
+                35, // temperatureToleranceHigh
+                additionalParam // Additional parameter based on PlantType
+        );
+
+        return plant;
+    }
+
+    private Object getAdditionalParamForPlantType(PlantType type) {
+        switch (type) {
+            case ROSE:
+                return "Sweet Scent"; // Fragrance for Rose
+            case ASHOKA:
+                return "Strong Scent"; // Fragrance for Jasmine
+            case MANGO:
+                return 100; // fruitYield for Mango
+            case TULSI:
+                return "Anti-inflammatory"; // medicinalProperties for Tulsi
+            case SUNFLOWER:
+                return 50; // seedProduction for Sunflower
+            default:
+                return null; // No additional parameters required
+        }
+    }
+
+    private void startDayIncrementTimer() {
+        Thread dayIncrementThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(3600000); // 3600 seconds = 1 hour of real time
+                    Platform.runLater(() -> {
+                        // Increment the day counter
+                        int currentDay = Integer.parseInt(currentDayLabel.getText().replace("Day: ", ""));
+                        currentDay++;
+                        currentDayLabel.setText("Day: " + currentDay);
+
+                        // Log the start of the new day
+                        logArea.appendText(getCurrentTime() + ": A new day has started! Day " + currentDay + "\n");
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        dayIncrementThread.setDaemon(true);
+        dayIncrementThread.start();
+    }
+
+    private void startWaterReductionTimer() {
+        Thread waterReductionThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(30000); // 30 seconds interval
+                    Platform.runLater(() -> {
+                        Iterator<Map.Entry<Button, Plant>> iterator = plantMap.entrySet().iterator();
+
+                        while (iterator.hasNext()) {
+                            Map.Entry<Button, Plant> entry = iterator.next();
+                            Button gridButton = entry.getKey();
+                            Plant plant = entry.getValue();
+
+                            if (plant != null) {
+                                int baseRate = plant.getWaterRequirement();
+                                double temperatureMultiplier = 1 + (Math.abs(currentTemperature - 25) * 0.05); // Adjust rate based on temperature
+                                int reduction = (int) (baseRate * temperatureMultiplier);
+                                plant.decreaseWaterLevel(reduction);
+
+                                // Retrieve row and column from UserData
+                                int[] coordinates = (int[]) gridButton.getUserData();
+                                int row = coordinates[0];
+                                int col = coordinates[1];
+
+                                // Check for active insects on the plant
+                                List<String> activeInsects = activeInsectsMap.get(gridButton);
+                                if (activeInsects != null && !activeInsects.isEmpty()) {
+                                    int insectDamage = 0;
+                                    for (String insect : activeInsects) {
+                                        insectDamage += insectDamageMap.getOrDefault(insect, new HashMap<>())
+                                                .getOrDefault(plant.getPlantType().name(), 0);
+                                    }
+                                    plant.decreaseHealth(insectDamage);
+
+                                    logArea.appendText(getCurrentTime() + ": Insects at grid (" + row + ", " + col +
+                                            ") reduced health of " + plant.getName() + " by " + insectDamage +
+                                            " units. Current health: " + plant.getHealth() + "%\n");
+                                }
+
+                                if (plant.getCurrentWaterLevel() == 0) {
+                                    plant.setHealth(0); // Set health to zero if water level is zero
+                                }
+
+                                if (plant.getHealth() == 0) {
+                                    // Remove plant from the grid and backend
+                                    gridButton.setText("");
+                                    gridButton.setStyle("-fx-background-color: #8B4513; -fx-border-color: black;-fx-pref-width: 120px;-fx-pref-height: 70px;"); // Reset grid button style
+                                    iterator.remove(); // Remove the plant from the backend storage
+                                    logArea.appendText(getCurrentTime() + ": " + plant.getName() + " at grid (" + row + ", " + col + ") has died and been removed.\n");
+                                } else {
+                                    updateGridButtonText(gridButton, plant);
+                                    logArea.appendText(getCurrentTime() + ": Water level of " + plant.getName() +
+                                            " at grid (" + row + ", " + col + ") reduced by " + reduction + " units. Current water level: " + plant.getCurrentWaterLevel() + "%\n");
+                                }
+                            }
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        waterReductionThread.setDaemon(true);
+        waterReductionThread.start();
     }
 }
