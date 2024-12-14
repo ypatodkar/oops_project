@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.factory.PlantFactory;
 import com.project.factory.PlantType;
+import com.project.modules.Insect;
 import com.project.modules.Plant;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -40,7 +41,7 @@ public class GardenSimulation extends Application {
     public void start(Stage primaryStage) {
         initializePestVulnerabilities();
         initializeInsectData();
-
+        insects = initializeInsects();
 
         BorderPane mainLayout = new BorderPane();
 
@@ -65,7 +66,7 @@ public class GardenSimulation extends Application {
         mainLayout.setCenter(gardenGrid);
         mainLayout.setRight(rightSection);
 
-        Scene scene = new Scene(mainLayout, 1200, 800);
+        Scene scene = new Scene(mainLayout, 1300, 1300);
         URL cssResource = getClass().getResource("/css/styles.css");
         if (cssResource != null) {
             scene.getStylesheets().add(cssResource.toExternalForm());
@@ -79,7 +80,85 @@ public class GardenSimulation extends Application {
 
         startWaterReductionTimer();
         startDayIncrementTimer();
+        startRandomInsectAttack(); // Start random insect attack timer
     }
+
+    private List<Insect> insects;
+
+    private List<Insect> initializeInsects() {
+        List<Insect> insectList = new ArrayList<>();
+        insectList.add(new Insect("Insect A", "🪲", Map.of(
+                PlantType.ROSE.name(), 10,
+                PlantType.SUNFLOWER.name(), 15,
+                PlantType.TULSI.name(), 5
+        )));
+        insectList.add(new Insect("Insect B", "🐜", Map.of(
+                PlantType.ROSE.name(), 8,
+                PlantType.ASHOKA.name(), 12
+        )));
+        insectList.add(new Insect("Insect C", "🦗", Map.of(
+                PlantType.SUNFLOWER.name(), 10,
+                PlantType.MANGO.name(), 7
+        )));
+        insectList.add(new Insect("Insect D", "🐞", Map.of(
+                PlantType.ASHOKA.name(), 20
+        )));
+        return insectList;
+    }
+
+
+    private void startRandomInsectAttack() {
+        Thread insectAttackThread = new Thread(() -> {
+            Random random = new Random();
+
+            while (true) {
+                try {
+                    int delay = (random.nextInt(30) + 10) * 1000; // Random interval: 10 to 40 seconds
+                    Thread.sleep(delay);
+
+                    Platform.runLater(() -> {
+                        if (plantMap.isEmpty()) return;
+
+                        // Select a random insect
+                        Insect randomInsect = insects.get(random.nextInt(insects.size()));
+
+                        // Select random plants to attack
+                        List<Button> targetButtons = new ArrayList<>(plantMap.keySet());
+                        int numTargets = random.nextInt(targetButtons.size()) + 1;
+                        Collections.shuffle(targetButtons);
+
+                        for (int i = 0; i < numTargets; i++) {
+                            Button gridButton = targetButtons.get(i);
+                            Plant plant = plantMap.get(gridButton);
+
+                            if (plant != null && randomInsect.getDamage(plant.getPlantType()) > 0) {
+                                int damage = randomInsect.getDamage(plant.getPlantType());
+
+                                // Apply damage
+                                plant.decreaseHealth(damage);
+                                activeInsectsMap.computeIfAbsent(gridButton, k -> new ArrayList<>()).add(randomInsect.getName());
+
+                                // Log the random attack
+                                logArea.appendText(getCurrentTime() + ": Random " + randomInsect + " attacked " + plant.getName()
+                                        + " at grid (" + ((int[]) gridButton.getUserData())[0] + ", "
+                                        + ((int[]) gridButton.getUserData())[1] + "). Damage: " + damage + "\n");
+
+                                // Update the grid button
+                                updateGridButtonText(gridButton, plant);
+                            }
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        insectAttackThread.setDaemon(true);
+        insectAttackThread.start();
+    }
+
+
 
     private void initializePestVulnerabilities() {
         pestVulnerabilities.put(PlantType.ROSE.name(), Arrays.asList("Insect A", "Insect B"));
@@ -361,51 +440,58 @@ public class GardenSimulation extends Application {
         layout.setSpacing(10);
         layout.setPadding(new Insets(10));
 
-        CheckBox insectA = new CheckBox("🪲 Insect A");
-        CheckBox insectB = new CheckBox("🐜 Insect B");
-        CheckBox insectC = new CheckBox("🦗 Insect C");
-        CheckBox insectD = new CheckBox("🐞 Insect D");
+        // Dynamically create checkboxes for all insects
+        List<CheckBox> insectCheckBoxes = new ArrayList<>();
+        for (Insect insect : insects) {
+            CheckBox checkBox = new CheckBox(insect.toString());
+            checkBox.setUserData(insect); // Store insect object
+            insectCheckBoxes.add(checkBox);
+        }
 
         Button attackButton = new Button("Attack");
         attackButton.setOnAction(e -> {
-            List<String> selectedInsects = new ArrayList<>();
-            if (insectA.isSelected()) selectedInsects.add("Insect A");
-            if (insectB.isSelected()) selectedInsects.add("Insect B");
-            if (insectC.isSelected()) selectedInsects.add("Insect C");
-            if (insectD.isSelected()) selectedInsects.add("Insect D");
+            List<Insect> selectedInsects = new ArrayList<>();
+            for (CheckBox checkBox : insectCheckBoxes) {
+                if (checkBox.isSelected()) {
+                    selectedInsects.add((Insect) checkBox.getUserData());
+                }
+            }
 
             if (!selectedInsects.isEmpty()) {
                 for (Button gridButton : plantMap.keySet()) {
                     Plant plant = plantMap.get(gridButton);
                     if (plant != null) {
-                        for (String insect : selectedInsects) {
-                            if (pestVulnerabilities.getOrDefault(plant.getPlantType().name(), new ArrayList<>()).contains(insect)) {
-                                activeInsectsMap.computeIfAbsent(gridButton, k -> new ArrayList<>()).add(insect);
-                                int damage = insectDamageMap.getOrDefault(insect, new HashMap<>()).getOrDefault(plant.getPlantType().name(), 0);
+                        for (Insect insect : selectedInsects) {
+                            if (insect.getDamage(plant.getPlantType()) > 0) {
+                                int damage = insect.getDamage(plant.getPlantType());
+
+                                // Apply damage
                                 plant.decreaseHealth(damage);
+                                activeInsectsMap.computeIfAbsent(gridButton, k -> new ArrayList<>()).add(insect.getName());
 
-                                // Retrieve row and column from UserData
-                                int[] coordinates = (int[]) gridButton.getUserData();
-                                int row = coordinates[0];
-                                int col = coordinates[1];
+                                // Log the attack
+                                logArea.appendText(getCurrentTime() + ": Manual " + insect + " attacked " + plant.getPlantType().name()
+                                        + " at grid (" + ((int[]) gridButton.getUserData())[0] + ", "
+                                        + ((int[]) gridButton.getUserData())[1] + "). Damage: " + damage + "\n");
 
+                                // Update the grid button
                                 updateGridButtonText(gridButton, plant);
-                                logArea.appendText(getCurrentTime() + ": " + insect + " attacked " + plant.getName() +
-                                        " at grid (" + row + ", " + col + "). Damage: " + damage + "\n");
                             }
                         }
+
                     }
                 }
             }
             popup.close();
         });
 
-        layout.getChildren().addAll(new Label("Select Insects to Attack:"), insectA, insectB, insectC, insectD, attackButton);
+        layout.getChildren().addAll(new Label("Select Insects to Attack:"), new VBox(insectCheckBoxes.toArray(new CheckBox[0])), attackButton);
 
         Scene popupScene = new Scene(layout, 300, 250);
         popup.setScene(popupScene);
         popup.show();
     }
+
 
     private GridPane initializeGardenGrid() {
         GridPane gardenGrid = new GridPane();
@@ -486,11 +572,18 @@ public class GardenSimulation extends Application {
 
                 gridButton.setOnAction(e -> {
                     if (selectedPlantType != null && gridButton.getText().isEmpty()) {
-                        Plant plant = createPlant(selectedPlantType, "Plant " + (row * GRID_SIZE + col));
+                        //Plant plant = createPlant(selectedPlantType, "Plant " + (row * GRID_SIZE + col));
+
+                        Plant plant = createPlant(selectedPlantType, selectedPlantType.name() + " " + (row * GRID_SIZE + col));
+
+
                         gridButton.setText(selectedPlantType.getEmoji());
                         gridButton.setStyle("-fx-background-color: green; -fx-border-color: black;-fx-pref-width: 120px;-fx-pref-height: 70px;");
                         plantMap.put(gridButton, plant);
-                        logArea.appendText(getCurrentTime() + ": Planted " + plant.getName() + " at (" + row + ", " + col + ").\n");
+                        //logArea.appendText(getCurrentTime() + ": Planted " + plant.getName() + " at (" + row + ", " + col + ").\n");
+
+                        logArea.appendText(getCurrentTime() + ": Planted " + plant.getPlantType().name() + " at (" + row + ", " + col + ").\n");
+
                     } else if (!gridButton.getText().isEmpty()) {
                         logArea.appendText(getCurrentTime() + ": Grid (" + row + ", " + col + ") is already occupied.\n");
                     } else {
